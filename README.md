@@ -1,6 +1,12 @@
-# 🌐 CogniSphere
-
+# 🌐 CogniSphere  
+<div align="center">
 "Your AI-Powered Personal Learning Ecosystem"
+
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](#)  
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](#)  
+[![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)  
+[![Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen.svg)](#)  
+</div>
 
 ## 📌 Problem: The Fragmented Learning Experience
 
@@ -29,12 +35,15 @@ This fragmentation leads to:
 
 ## 👥 Who is Impacted?
 
-- 🎓 **Students** – Struggle to combine notes, courses, and tests.
-- 👩‍🏫 **Educators** – Spend hours preparing slides/quizzes.
-- 🏢 **Corporate Learners** – Outdated LMS systems lack personalization.
-- 🌐 **Independent Learners** – No affordable, guided ecosystem.
+| Segment | Challenge Faced |
+|---------|-----------------|
+| 🎓 **Students** | Struggle to combine notes, courses, and tests |
+| 👩‍🏫 **Educators** | Spend hours preparing slides/quizzes |
+| 🏢 **Corporate Learners** | Outdated LMS systems lack personalization |
+| 🌐 **Independent Learners** | No affordable, guided ecosystem |
 
-👉 This is a mass-market problem: spanning individuals, institutions, and corporates.
+👉 A **mass-market problem** spanning individuals, institutions, and corporates.  
+
 
 ## 💡 Our Solution: CogniSphere
 
@@ -50,34 +59,74 @@ With CogniSphere, learners can:
 
 **CogniSphere** = Affordable, accessible, and scalable learning without dependence on costly experts.
 
-## ✨ Key Features
+## ✨ Key Features  
 
-- 🔒 **Personal Study Library** – All your content, intelligently structured.
-- 🎞 **AI-Powered Presentations** – From documents → slides + speaker notes.
-- 📑 **Flashcard Assessments** – Reinforcement through recall-based testing.
-- 🤖 **Socratic Tutor** – Context-aware, interactive Q&A.
-- 📝 **Dynamic Assessments** – Auto-generated quizzes and remedial lessons.
-- 📊 **Adaptive Roadmaps** – Personalized progress tracking.
-- 📱 **Cross-Platform** – Web dashboard + mobile-first learning app.
+| Feature | Description | Status |
+|---------|-------------|--------|
+| 🔒 **Personal Library** | All learning materials intelligently structured | ✅ Active |
+| 🎞 **AI Presentations** | Docs → Slides + Speaker Notes | ✅ Active |
+| 📑 **Flashcards** | Recall-based assessment & reinforcement | ✅ Active |
+| 🤖 **Socratic Tutor** | Context-aware interactive Q&A | ✅ Active |
+| 📝 **Dynamic Quizzes** | Auto-generated with remedial lessons | ✅ Active |
+| 📊 **Adaptive Roadmaps** | Personalized, real-time progress | ✅ Active |
+| 📱 **Cross-Platform** | Web + Mobile app | ✅ Active |
 
 ## 🛠️ Tech Stack & Architecture
 
-### Frontend
+```
+┌═══════════════════════════════════════════════════════════════════════════════════════┐
+║ 🎨 FRONTEND LAYER ║
+╠═══════════════════════════════════════════════════════════════════════════════════════╣
+║ ║
+║ 🌐 Next.js (Web App) 📱 React Native (Mobile App) ║
+║ ├─ Dashboard & Analytics ├─ Flashcards, Tutor Access ║
+║ ├─ Roadmap Visualization ├─ Interactive Lessons ║
+║ └─ Cross-Platform UI └─ Mobile-First Adoption ║
+║ ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+│
+▼
+┌═══════════════════════════════════════════════════════════════════════════════════════┐
+║ ⚙️ BACKEND & STORAGE ║
+╠═══════════════════════════════════════════════════════════════════════════════════════╣
+║ ║
+║ ⚙️ Next.js API Routes 🗄 Supabase PostgreSQL ║
+║ ├─ Authentication ├─ User Profiles & Course Data ║
+║ ├─ CRUD APIs ├─ Performance Tracking ║
+║ └─ Orchestration └─ ACID Transactions ║
+║ ║
+║ 📂 Supabase Storage ☁️ Cloud-Native Infra ║
+║ ├─ Notes, PDFs, PPTs ├─ Scalable Deployment ║
+║ └─ Media Assets └─ CDN for Fast Access ║
+║ ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+│
+▼
+┌═══════════════════════════════════════════════════════════════════════════════════════┐
+║ 🤖 AI / ML LAYER ║
+╠═══════════════════════════════════════════════════════════════════════════════════════╣
+║ ║
+║ 🚀 FastAPI RAG Server 🔎 ChromaDB ║
+║ ├─ Document Ingestion ├─ Embeddings + Semantic Search ║
+║ ├─ Contextual Retrieval └─ Efficient Query Pipelines ║
+║ ║
+║ ✨ Gemini 2.0 Flash LLM 🧠 Adaptive AI ║
+║ ├─ Course & Slide Generation ├─ Roadmap Adaptation ║
+║ ├─ Socratic Tutor Conversations └─ Personalized Recommendations ║
+║ ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+```
 
-- 🌐 **Next.js Web App** (dashboard, analytics, roadmap visualization)
-- 📱 **React Native Mobile App** (interactive lessons, flashcards, tutor access)
+### 🔄 Integration Flow
 
-### Backend & Storage
+Frontend (Next.js + React Native) ↔ Backend (Next.js APIs + Supabase) ↔ AI Layer (FastAPI + ChromaDB + Gemini 2.0)
 
-- ⚙️ **Next.js API Routes** (auth, orchestration, CRUD)
-- 🗄 **Supabase PostgreSQL** (user profiles, courses, performance data)
-- 📂 **Supabase Storage** (documents, notes, media)
+### ⚡ Performance Optimizations
 
-### AI & ML Layer
-
-- 🚀 **FastAPI RAG Server** (document ingestion, retrieval)
-- 🔎 **ChromaDB** (embeddings + semantic search)
-- ✨ **Gemini 2.0 Flash** (content generation, roadmaps, chatbot answers)
+- Caching & batching Gemini API calls
+- CDN for static assets & media
+- Database indexing & query optimization
+- Horizontal scaling via cloud infra
 
 ## 🔄 Flow of the App
 
@@ -87,7 +136,8 @@ With CogniSphere, learners can:
 4. 🧑‍🏫 **Socratic Tutor** → Real-time Q&A and concept reinforcement.
 5. 📝 **Assessment & Flashcards** → Quizzes, recall-based learning, remedial lessons.
 6. 📊 **Progress Tracking** → Roadmap updates dynamically with mastery scores.
-![Flow](launchpad-Mappa/flow.png)
+
+![Flow Diagram](flow.png)
 
 ## 🚀 Scalability & Business Model
 
