@@ -158,7 +158,7 @@ const Model: React.FC<ModelProps> = ({ modelUrl, playingAnimation, onAnimationsL
 
 // --- Enhanced Main App Component ---
 const App: React.FC = () => {
-  const modelUrl = '/source/Teacher Female Narration 01 (1).glb';
+  const modelUrl = '/Teacher Female Narration 01 (1).glb';
   // Set default to standing pose
   const [playingAnimation, setPlayingAnimation] = useState<string | null>('Teacher_StandingPose');
   const [animationNames, setAnimationNames] = useState<string[]>([]);

@@ -7,6 +7,7 @@ import { createJsonDemoMode } from './utils/pptDemoMode';
 import PPTTemplate from './PPTTemplate';
 import ChatBot from './ChatBot';
 import CourseCompletionCard from './CourseCompletionCard';
+import TeacherModel from './TeacherModel';
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -187,20 +188,20 @@ Remember to practice what you've learned and continue exploring this fascinating
 
   // Render Course Page
   const renderCoursePage = () => (
-    <div className={`${nunito.className} flex flex-col w-full px-4 sm:px-8 mx-auto`}>
-      <div className="flex justify-between items-center mb-8">
+    <div className={`${nunito.className} flex flex-col w-full h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white px-4 sm:px-8 mx-auto`}>
+      <div className="flex justify-between items-center mb-8 pt-8">
         <button
           onClick={resetComponent}
-          className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-gray-500 to-gray-700 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out"
+          className="px-5 py-2.5 text-sm font-medium text-white/90 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full hover:bg-white/20 transition-all"
         >
           ← Back to Roadmap
         </button>
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-800">
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
           Your AI Crash Course
         </h1>
         <button
           onClick={() => setIsChatbotOpen(true)}
-          className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-pink-500 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out"
+          className="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-full shadow-lg hover:from-blue-600 hover:to-purple-600 transition-all"
         >
           💬 Ask AI Teacher
         </button>
@@ -208,38 +209,38 @@ Remember to practice what you've learned and continue exploring this fascinating
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-50/80 backdrop-blur-sm text-red-600 p-4 rounded-xl mb-5 border border-red-200/50 text-sm shadow-sm">
+        <div className="bg-red-500/20 backdrop-blur-xl text-red-300 p-4 rounded-2xl mb-5 border border-red-500/30 text-sm">
           {error}
         </div>
       )}
 
       {/* Processing Indicator */}
       {isProcessing && (
-        <div className="text-center p-10 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-xl mb-8">
-          <div className="w-8 h-8 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin mx-auto mb-5" />
+        <div className="text-center p-10 bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl shadow-2xl mb-8">
+          <div className="w-8 h-8 border-4 border-white/20 border-t-blue-400 rounded-full animate-spin mx-auto mb-5" />
           
           <div className="mb-5">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            <h3 className="text-lg font-semibold text-white mb-3">
               Creating Your Course...
             </h3>
-            <p className="text-gray-600 mb-5">
+            <p className="text-white/70 mb-5">
               {processingStep}
             </p>
             
             {/* Progress Bar */}
-            <div className="w-full max-w-md h-2 bg-gray-200 rounded-full mx-auto overflow-hidden">
+            <div className="w-full max-w-md h-2 bg-white/10 rounded-full mx-auto overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-blue-500 to-pink-500 rounded-full transition-all duration-300"
+                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-300"
                 style={{ width: `${processingProgress}%` }}
               />
             </div>
             
-            <div className="mt-3 text-sm bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500 font-semibold">
+            <div className="mt-3 text-sm text-blue-300 font-semibold">
               {processingProgress}% Complete
             </div>
           </div>
           
-          <div className="text-sm text-gray-600 italic">
+          <div className="text-sm text-white/70 italic">
             {processingProgress < 40 ? 
               ' Creating course structure...' :
               processingProgress < 80 ?
@@ -250,28 +251,35 @@ Remember to practice what you've learned and continue exploring this fascinating
         </div>
       )}
 
-      {slides.length > 0 && !isProcessing ? (
-        <PPTTemplate
-          slides={slides}
-          currentSlide={currentSlide}
-          onNext={nextSlide}
-          onPrev={prevSlide}
-          onGoToSlide={goToSlide}
-          script={slides[currentSlide]?.script}
-          isPaused={isPaused}
-          onPauseChange={handlePauseResume}
-        />
-      ) : !isProcessing && !error ? (
-        <div className="text-center p-10 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-xl">
-          <div className="text-6xl mb-4">📚</div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Welcome to Your Course
-          </h3>
-          <p className="text-gray-600">
-            Your course content will appear here once it's generated.
-          </p>
+      <div className="flex-grow flex flex-row gap-8 overflow-y-auto pb-8">
+        <div className="w-3/4 flex flex-col">
+          {slides.length > 0 && !isProcessing ? (
+            <PPTTemplate
+              slides={slides}
+              currentSlide={currentSlide}
+              onNext={nextSlide}
+              onPrev={prevSlide}
+              onGoToSlide={goToSlide}
+              script={slides[currentSlide]?.script}
+              isPaused={isPaused}
+              onPauseChange={handlePauseResume}
+            />
+          ) : !isProcessing && !error ? (
+            <div className="text-center p-10 bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl h-full flex flex-col justify-center">
+              <div className="text-6xl mb-4">📚</div>
+              <h3 className="text-xl font-semibold text-white mb-2">
+                Welcome to Your Course
+              </h3>
+              <p className="text-white/70">
+                Your course content will appear here once it's generated.
+              </p>
+            </div>
+          ) : null}
         </div>
-      ) : null}
+        <div className="w-1/4 h-full">
+          <TeacherModel />
+        </div>
+      </div>
 
       {isChatbotOpen && (
         <ChatBot

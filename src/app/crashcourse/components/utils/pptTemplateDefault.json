@@ -34,7 +34,7 @@
     {
       "type": "image",
       "title": "Image Slide",
-      "imageUrl": "",
+      "imageUrl": "/image.png",
       "caption": "This is a sample image from CDN.",
       "script": "Images are a great way to make content more engaging. This slide demonstrates embedding an image from a remote Content Delivery Network, with a caption below."
     },
@@ -53,13 +53,6 @@
       "script": "For more technical topics, we can include diagrams using Mermaid syntax. This slide shows a simple flowchart. It starts, checks if something is working, and provides paths for both 'Yes' and 'No' outcomes."
     },
     {
-      "type": "quote",
-      "title": "Quote Slide",
-      "quote": "The best way to predict the future is to invent it.",
-      "author": "Alan Kay",
-      "script": "To add some inspiration, we can use a quote slide. As the great Alan Kay said: 'The best way to predict the future is to invent it.'"
-    },
-    {
       "type": "code",
       "title": "Code Example Slide",
       "language": "javascript",
@@ -75,7 +68,7 @@
         "Breaks up text-heavy slides",
         "Provides visual context"
       ],
-      "imageUrl": "",
+      "imageUrl": "/image.png",
       "imageCaption": "Visuals make concepts stick.",
       "script": "This slide demonstrates a hybrid layout, combining text with a supporting visual. This approach enhances comprehension and provides valuable context."
     },

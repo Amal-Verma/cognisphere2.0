@@ -218,18 +218,16 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
     }
   };
 
-
-
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-8 right-8 w-[400px] h-[600px] flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200/80 z-50">
+    <div className="fixed bottom-8 right-8 w-[400px] h-[600px] flex flex-col bg-slate-900/70 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/20 z-50">
       {/* Chatbot Header */}
-      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-pink-500 text-white rounded-t-2xl">
+      <div className="flex justify-between items-center p-4 bg-white/5 text-white rounded-t-2xl border-b border-white/10">
         <h3 className="text-lg font-semibold">AI Teacher</h3>
         <button 
           onClick={onClose} 
-          className="text-white/80 hover:text-white"
+          className="text-white/70 hover:text-white"
           title="Close chat"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -239,8 +237,8 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
       </div>
       
       {/* Slide indicator */}
-      <div className="px-4 py-2 bg-blue-50 border-b border-blue-100">
-        <span className="text-xs text-blue-700 font-medium">
+      <div className="px-4 py-2 bg-black/20 border-b border-white/10">
+        <span className="text-xs text-blue-300 font-medium">
           Slide {slideNumber + 1} of {totalSlides}
         </span>
       </div>
@@ -255,15 +253,15 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
             <div
               className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed relative ${
                 message.type === 'user'
-                  ? 'bg-blue-500 text-white rounded-br-sm'
-                  : 'bg-gray-100 text-gray-800 rounded-bl-sm'
+                  ? 'bg-blue-500/80 text-white rounded-br-sm'
+                  : 'bg-slate-700/80 text-white/90 rounded-bl-sm'
               }`}
             >
               <div className="whitespace-pre-wrap">{message.content}</div>
               {message.type === 'bot' && !isSpeaking && (
                 <button
                   onClick={() => speakText(message.content)}
-                  className="absolute top-2 right-2 w-6 h-6 bg-black bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center text-xs transition-colors"
+                  className="absolute top-2 right-2 w-6 h-6 bg-black bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center text-xs transition-colors text-white"
                   title="Read aloud"
                 >
                   🔊
@@ -275,11 +273,11 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
         
         {isTyping && (
           <div className="flex justify-start">
-            <div className="bg-gray-100 text-gray-800 p-3 rounded-2xl rounded-bl-sm">
+            <div className="bg-slate-700/80 text-gray-800 p-3 rounded-2xl rounded-bl-sm">
               <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
               </div>
             </div>
           </div>
@@ -289,14 +287,14 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
 
       {/* Voice Controls when speaking */}
       {isSpeaking && (
-        <div className="px-4 py-3 bg-blue-50 border-t border-blue-100 flex items-center justify-between">
+        <div className="px-4 py-3 bg-blue-900/30 border-t border-blue-500/30 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-blue-600">🔊</span>
-            <span className="text-sm text-blue-700">Reading response...</span>
+            <span className="text-blue-300">🔊</span>
+            <span className="text-sm text-blue-300">Reading response...</span>
           </div>
           <button
             onClick={stopSpeaking}
-            className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 transition-colors"
+            className="text-xs bg-blue-600/80 text-white px-2 py-1 rounded hover:bg-blue-700/80 transition-colors"
           >
             Stop
           </button>
@@ -304,7 +302,7 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
       )}
 
       {/* Input Area */}
-      <div className="border-t border-gray-200 p-4 bg-gray-50">
+      <div className="border-t border-white/10 p-4 bg-black/20">
         <div className="flex gap-2 items-end">
           <div className="flex-1">
             <input
@@ -313,7 +311,7 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               placeholder="Ask about the course content..."
-              className="w-full p-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+              className="w-full p-3 bg-slate-800/90 border border-slate-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
               disabled={isTyping}
             />
           </div>
@@ -323,8 +321,8 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
               onClick={isListening ? stopListening : startListening}
               className={`w-10 h-10 rounded-full border-none flex items-center justify-center text-white transition-all ${
                 isListening 
-                  ? 'bg-red-500 animate-pulse' 
-                  : 'bg-gray-500 hover:bg-gray-600'
+                  ? 'bg-red-500/80 animate-pulse' 
+                  : 'bg-slate-600/80 hover:bg-slate-500/80'
               }`}
               title={isListening ? 'Stop listening' : 'Start voice input'}
             >
@@ -337,15 +335,15 @@ export default function ChatBot({ isOpen, onClose, slides, slideNumber, totalSli
             disabled={!inputMessage.trim() || isTyping}
             className={`w-10 h-10 rounded-full border-none flex items-center justify-center text-white transition-all ${
               inputMessage.trim() && !isTyping
-                ? 'bg-blue-500 hover:bg-blue-600'
-                : 'bg-gray-300 cursor-not-allowed'
+                ? 'bg-blue-500/80 hover:bg-blue-600/80'
+                : 'bg-slate-700/80 cursor-not-allowed'
             }`}
           >
             📤
           </button>
         </div>
         
-        <div className="mt-2 text-xs text-gray-500 text-center">
+        <div className="mt-2 text-xs text-slate-400 text-center">
           Ask questions about content or say "next/previous" to navigate
           {speechSupported && <span> • Click 🎤 for voice input</span>}
         </div>

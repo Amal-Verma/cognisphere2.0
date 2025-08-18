@@ -10,7 +10,7 @@ const nunito = Nunito({ subsets: ["latin"] });
 
 const Mermaid = dynamic(() => import('./utils/mermaidRenderer'), {
   ssr: false,
-  loading: () => <div className="min-h-[200px] flex items-center justify-center bg-white/60 backdrop-blur-sm rounded-lg border border-gray-200/50 text-gray-600">Loading Diagram...</div>,
+  loading: () => <div className="min-h-[200px] flex items-center justify-center bg-slate-800/50 backdrop-blur-lg rounded-lg border border-slate-700 text-white/70">Loading Diagram...</div>,
 });
 
 export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGoToSlide, autoNavigate = false, scriptProgress = 0, onScriptComplete, isPaused = false, onPauseChange }) {
@@ -554,8 +554,8 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
 
   if (!slides || slides.length === 0) {
     return (
-      <div className={`${nunito.className} w-full h-[600px] bg-white/60 backdrop-blur-sm flex items-center justify-center rounded-2xl border border-gray-200/50 shadow-lg`}>
-        <p className="text-gray-800 text-lg">No slides available</p>
+      <div className={`${nunito.className} w-full h-[600px] bg-slate-800/50 backdrop-blur-lg flex items-center justify-center rounded-2xl border border-slate-700 shadow-lg`}>
+        <p className="text-white/70 text-lg">No slides available</p>
       </div>
     );
   }
@@ -587,7 +587,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
       `}</style>
       
       {/* PPT Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-pink-500 text-white p-4 sm:p-5 rounded-t-2xl flex justify-between items-center shadow-lg">
+      <div className="bg-white/5 backdrop-blur-3xl text-white p-4 sm:p-5 rounded-t-2xl flex justify-between items-center shadow-lg border-b border-white/10">
         <h2 className="m-0 text-lg sm:text-xl font-semibold">
           📊 Presentation
         </h2>
@@ -602,10 +602,10 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
             disabled={isInitializingRecording}
             className={`${
               isPresentationMode 
-                ? 'bg-red-500 hover:bg-red-600' 
+                ? 'bg-red-500/80 hover:bg-red-500/100' 
                 : isInitializingRecording
-                ? 'bg-yellow-500 cursor-not-allowed'
-                : 'bg-green-500 hover:bg-green-600'
+                ? 'bg-yellow-500/80 cursor-not-allowed'
+                : 'bg-green-500/80 hover:bg-green-500/100'
             } text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-all hover:shadow-md transform hover:scale-105 duration-200 flex items-center gap-2 disabled:transform-none disabled:hover:scale-100`}
             title={
               isPresentationMode 
@@ -634,7 +634,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
 
           {/* Recording Setup Status */}
           {isInitializingRecording && (
-            <div className="flex items-center gap-1 text-xs bg-yellow-500/20 px-2 py-1 rounded border border-yellow-300">
+            <div className="flex items-center gap-1 text-xs bg-yellow-500/20 px-2 py-1 rounded border border-yellow-400/50">
               <div style={{
                 width: '8px',
                 height: '8px',
@@ -642,13 +642,13 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
                 borderRadius: '50%',
                 animation: 'pulse 1s infinite'
               }} />
-              <span className="text-yellow-700 font-medium">Initializing...</span>
+              <span className="text-yellow-300 font-medium">Initializing...</span>
             </div>
           )}
 
           {/* Recording Status Indicator */}
           {isRecording && (
-            <div className="flex items-center gap-1 text-xs bg-red-500/20 px-2 py-1 rounded border border-red-300">
+            <div className="flex items-center gap-1 text-xs bg-red-500/20 px-2 py-1 rounded border border-red-400/50">
               <div style={{
                 width: '8px',
                 height: '8px',
@@ -656,7 +656,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
                 borderRadius: '50%',
                 animation: 'pulse 1s infinite'
               }} />
-              <span className="text-red-700 font-medium">
+              <span className="text-red-300 font-medium">
                 {mediaRecorderRef.current?.state === 'paused' ? 'Recording Paused' : 'Recording'} {mediaRecorderRef.current?.stream?.getAudioTracks().length > 0 ? '🔊' : '🔇'}
               </span>
             </div>
@@ -664,7 +664,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
 
           {/* Unified Pause Status Indicator */}
           {currentlyPaused && (
-            <div className="flex items-center gap-1 text-xs bg-yellow-500/20 px-2 py-1 rounded border border-yellow-300">
+            <div className="flex items-center gap-1 text-xs bg-yellow-500/20 px-2 py-1 rounded border border-yellow-400/50">
               <div style={{
                 width: '8px',
                 height: '8px',
@@ -672,7 +672,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
                 borderRadius: '50%',
                 animation: 'pulse 1s infinite'
               }} />
-              <span className="text-yellow-700 font-medium">
+              <span className="text-yellow-300 font-medium">
                 System Paused {isSpeaking && '| Audio Paused'} {isRecording && '| Recording Paused'}
               </span>
             </div>
@@ -682,7 +682,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
           {isRecording && !isPresentationMode && (
             <button
               onClick={stopRecording}
-              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-all hover:shadow-md transform hover:scale-105 duration-200 flex items-center gap-2"
+              className="bg-red-500/80 hover:bg-red-500/100 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-all hover:shadow-md transform hover:scale-105 duration-200 flex items-center gap-2"
               title="Stop recording manually"
             >
               🛑 Stop Recording
@@ -699,19 +699,19 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
                 borderRadius: '50%',
                 animation: 'pulse 1s infinite'
               }} />
-              {useManualNarration ? 'Manual Narration Mode...' : 'Speaking...'}
+              <span className="text-green-300">{useManualNarration ? 'Manual Narration Mode...' : 'Speaking...'}</span>
             </div>
           )}
         </div>
       </div>
 
       {/* PPT Slide Display */}
-      <div ref={presentationRef} className="bg-white/90 backdrop-blur-sm w-full min-h-[600px] max-h-[80vh] aspect-video p-8 sm:p-10 border-x border-gray-200/50 relative overflow-hidden flex flex-col shadow-lg">
+      <div ref={presentationRef} className="bg-slate-800/30 backdrop-blur-lg w-full min-h-[600px] max-h-[80vh] aspect-video p-8 sm:p-10 border-x border-white/10 relative overflow-hidden flex flex-col shadow-lg">
         {/* Slide Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-gray-100 opacity-50 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-indigo-900/50 opacity-50 z-0" />
 
         {/* Slide Content */}
-        <div className="relative z-10 text-gray-800">
+        <div className="relative z-10 text-white">
           {isClient && renderSlideContent(currentSlideData, currentSlide)}
         </div>
 
@@ -722,7 +722,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
       </div>
 
       {/* PPT Controls */}
-      <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-5 rounded-b-2xl border border-gray-200/50 border-t-0 flex justify-between items-center shadow-lg">
+      <div className="bg-white/5 backdrop-blur-3xl p-4 sm:p-5 rounded-b-2xl border border-white/10 border-t-0 flex justify-between items-center shadow-lg">
         {/* Navigation Controls */}
         <div className="flex gap-3 items-center">
           <button
@@ -730,8 +730,8 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
             disabled={currentSlide === 0}
             className={`${
               currentSlide === 0 
-                ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-                : 'bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white hover:shadow-md transform hover:scale-105'
+                ? 'bg-white/5 text-white/50 cursor-not-allowed' 
+                : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md transform hover:scale-105'
             } px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200`}
           >
             ← Previous
@@ -741,8 +741,8 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
             disabled={currentSlide === slides.length - 1}
             className={`${
               currentSlide === slides.length - 1 
-                ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-                : 'bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white hover:shadow-md transform hover:scale-105'
+                ? 'bg-white/5 text-white/50 cursor-not-allowed' 
+                : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md transform hover:scale-105'
             } px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200`}
           >
             Next →
@@ -767,8 +767,8 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
             }}
             className={`${
               currentlyPaused 
-                ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600' 
-                : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600'
+                ? 'bg-gradient-to-r from-green-500/80 to-emerald-500/80 hover:from-green-600/80 hover:to-emerald-600/80' 
+                : 'bg-gradient-to-r from-orange-500/80 to-amber-500/80 hover:from-orange-600/80 hover:to-amber-600/80'
             } text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-md transform hover:scale-105 flex items-center gap-2`}
             title={currentlyPaused ? 'Resume presentation (PPT + Audio + Recording)' : 'Pause presentation (PPT + Audio + Recording)'}
           >
@@ -791,13 +791,13 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
           
           {/* Recording Status Indicator */}
           {isRecording && (
-            <div className="flex items-center gap-1 px-2 py-1 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center gap-1 px-2 py-1 bg-red-900/30 border border-red-500/50 rounded-lg">
               <div className={`w-2 h-2 rounded-full ${
                 mediaRecorderRef.current?.state === 'paused' 
-                  ? 'bg-yellow-500 animate-pulse' 
-                  : 'bg-red-500 animate-pulse'
+                  ? 'bg-yellow-400 animate-pulse' 
+                  : 'bg-red-400 animate-pulse'
               }`}></div>
-              <span className="text-xs text-red-700 font-medium">
+              <span className="text-xs text-red-300 font-medium">
                 {mediaRecorderRef.current?.state === 'paused' ? 'Rec Paused' : 'Recording'}
               </span>
             </div>
@@ -816,8 +816,8 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
               disabled={currentlyPaused}
               className={`${
                 isSpeaking 
-                  ? 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600' 
-                  : 'bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600'
+                  ? 'bg-gradient-to-r from-red-500/80 to-pink-500/80 hover:from-red-600/80 hover:to-pink-600/80' 
+                  : 'bg-gradient-to-r from-purple-500/80 to-indigo-500/80 hover:from-purple-600/80 hover:to-indigo-600/80'
               } text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-md transform hover:scale-105 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:scale-100`}
               title={currentlyPaused ? 'Resume presentation to use TTS' : isSpeaking ? 'Stop narration' : 'Read slide aloud'}
             >
@@ -853,19 +853,19 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
               onGoToSlide(slideNum - 1);
             }
           }}
-          className="w-16 p-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-16 p-2 text-center bg-transparent border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white"
           min="1"
           max={slides.length}
           disabled={isPresentationMode}
         />
-        <span className="text-gray-600">/ {slides.length}</span>
+        <span className="text-white/70">/ {slides.length}</span>
       </div>
 
       {/* Complete Course Button on Last Slide */}
       {currentSlide === slides.length - 1 && slides.length > 0 && (
         <div className="flex justify-center mt-8">
           <button
-            className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl font-bold text-lg shadow-lg transition-all duration-200"
+            className="px-6 py-3 bg-gradient-to-r from-green-400/80 to-emerald-500/80 hover:from-green-400 hover:to-emerald-500 text-white rounded-xl font-bold text-lg shadow-lg transition-all duration-200"
             onClick={() => {
               // Update roadmap progress
               const savedCurrentIndex = localStorage.getItem('roadmapCurrentIndex');
@@ -887,10 +887,10 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
       {/* Recording Modal */}
       {showRecordingModal && recordedVideoUrl && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-pink-500 text-white p-6">
+          <div className="bg-slate-900 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-slate-700">
+            <div className="bg-slate-800/50 text-white p-6">
               <h3 className="text-2xl font-bold mb-2">🎥 Recording Complete!</h3>
-              <p className="text-blue-100">Your presentation has been successfully recorded with audio narration.</p>
+              <p className="text-slate-300">Your presentation has been successfully recorded with audio narration.</p>
             </div>
             
             <div className="p-6">
@@ -898,7 +898,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
                 <video
                   src={recordedVideoUrl}
                   controls
-                  className="w-full max-h-96 rounded-xl shadow-lg"
+                  className="w-full max-h-96 rounded-xl shadow-lg bg-black"
                   preload="metadata"
                 >
                   Your browser does not support video playback.
@@ -906,8 +906,8 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
               </div>
               
               <div className="flex justify-between items-center gap-4">
-                <div className="text-sm text-gray-600">
-                  <p className="font-medium mb-1">Recording Details:</p>
+                <div className="text-sm text-slate-400">
+                  <p className="font-medium mb-1 text-slate-300">Recording Details:</p>
                   <p>• Video format: WebM with VP9 codec</p>
                   <p>• Audio: High-quality narration included</p>
                   <p>• Date: {new Date().toLocaleDateString()}</p>
@@ -916,7 +916,7 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
                 <div className="flex gap-3">
                   <button
                     onClick={closeRecordingModal}
-                    className="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg font-medium transition-colors"
+                    className="px-4 py-2 text-slate-300 bg-slate-700 hover:bg-slate-600 rounded-lg font-medium transition-colors"
                   >
                     Close
                   </button>
@@ -948,14 +948,14 @@ function renderSlideContent(slide, slideIndex) {
   if (typeof slide === 'string') {
     return (
       <div className="p-6">
-        <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">Slide Content</h2>
+        <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">Slide Content</h2>
         <MarkdownRenderer>{slide}</MarkdownRenderer>
       </div>
     );
   }
 
   if (!slide || typeof slide !== 'object') {
-    return <div className="text-gray-600">No content available</div>;
+    return <div className="text-white/70">No content available</div>;
   }
 
   // Slide type switch
@@ -963,28 +963,28 @@ function renderSlideContent(slide, slideIndex) {
     case 'title':
       return (
         <div className="flex flex-col items-center justify-center h-full text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500">{safeString(slide.title)}</h1>
-          {slide.subtitle && <h2 className="text-xl sm:text-2xl text-gray-700 mb-6">{safeString(slide.subtitle)}</h2>}
-          <div className="text-gray-600 text-lg mb-2 font-semibold">{safeString(slide.author)}</div>
-          <div className="text-gray-500 text-base font-medium">{safeString(slide.date)}</div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-pink-400">{safeString(slide.title)}</h1>
+          {slide.subtitle && <h2 className="text-xl sm:text-2xl text-white/80 mb-6">{safeString(slide.subtitle)}</h2>}
+          <div className="text-white/70 text-lg mb-2 font-semibold">{safeString(slide.author)}</div>
+          <div className="text-white/60 text-base font-medium">{safeString(slide.date)}</div>
         </div>
       );
     case 'section':
       return (
         <div className="flex flex-col items-center justify-center h-full text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl text-gray-800 font-bold mb-3">{safeString(slide.title)}</h2>
-          <p className="text-gray-700 text-lg sm:text-xl">{safeString(slide.description)}</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl text-white font-bold mb-3">{safeString(slide.title)}</h2>
+          <p className="text-white/80 text-lg sm:text-xl">{safeString(slide.description)}</p>
         </div>
       );
     case 'content':
       return (
         <div className="p-6">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
           <MarkdownRenderer>{safeString(slide.content)}</MarkdownRenderer>
           {slide.bullets && Array.isArray(slide.bullets) && (
             <ul className="mt-4 ml-6 space-y-2">
               {slide.bullets.map((b, i) => (
-                <li key={i} className="text-lg text-gray-700"><MarkdownRenderer>{safeString(b)}</MarkdownRenderer></li>
+                <li key={i} className="text-lg text-white/80"><MarkdownRenderer>{safeString(b)}</MarkdownRenderer></li>
               ))}
             </ul>
           )}
@@ -993,62 +993,91 @@ function renderSlideContent(slide, slideIndex) {
     case 'image':
       return (
         <div className="flex flex-col items-center justify-center h-full">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
           <div className="relative w-4/5 h-96 mb-4">
             <Image 
               src={safeString(slide.imageUrl)} 
               alt={safeString(slide.caption || 'Slide image')} 
               fill
-              className="rounded-xl shadow-lg object-contain" 
+              className="rounded-lg object-contain shadow-2xl"
             />
           </div>
-          {slide.caption && <div className="text-gray-600 text-base font-medium">{safeString(slide.caption)}</div>}
+          {slide.caption && <p className="text-center text-white/70 mt-2">{safeString(slide.caption)}</p>}
         </div>
       );
-    case 'mermaid':
+    case 'content-and-image':
       return (
-        <div className="flex flex-col items-center justify-center h-full">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
-          <div className="w-full max-w-2xl min-h-[200px] bg-slate-50 rounded-xl p-4 mb-4 shadow-inner">
-            <Mermaid key={slideIndex} chart={safeString(slide.diagram)} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
+          <div className="md:order-2">
+            <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
+            <MarkdownRenderer>{safeString(slide.content)}</MarkdownRenderer>
           </div>
-          {slide.caption && <div className="text-gray-600 text-base font-medium">{safeString(slide.caption)}</div>}
-        </div>
-      );
-    case 'quote':
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-          <blockquote style={{ fontSize: 28, color: '#1f2937', fontStyle: 'italic', borderLeft: '6px solid #1e3a8a', paddingLeft: 24, marginBottom: 16 }}>
-            “{safeString(slide.quote)}”
-          </blockquote>
-          <div className="text-gray-700 text-xl font-bold">— {safeString(slide.author)}</div>
+          <div className="relative w-full h-80 md:order-1">
+            <Image 
+              src={safeString(slide.imageUrl)} 
+              alt={safeString(slide.title || 'Slide image')} 
+              layout="fill"
+              objectFit="contain"
+              className="rounded-lg shadow-2xl"
+            />
+          </div>
         </div>
       );
     case 'code':
       return (
-        <div className="p-6">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
-          <CodeBlock code={safeString(slide.code)} language={safeString(slide.language)} />
+        <div>
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
+          <CodeBlock 
+            language={safeString(slide.language)} 
+            code={safeString(slide.code)} 
+          />
+          {slide.explanation && <div className="mt-4 text-white/80"><MarkdownRenderer>{safeString(slide.explanation)}</MarkdownRenderer></div>}
+        </div>
+      );
+    case 'content-and-code':
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
+          <div>
+            <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
+            <MarkdownRenderer>{safeString(slide.content)}</MarkdownRenderer>
+          </div>
+          <div>
+            <CodeBlock 
+              language={safeString(slide.language)} 
+              code={safeString(slide.code)} 
+            />
+          </div>
+        </div>
+      );
+    case 'list':
+      return (
+        <div>
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
+          <ul className="space-y-3">
+            {Array.isArray(slide.items) && slide.items.map((item, index) => (
+              <li key={index} className="text-lg text-white/80 p-3 bg-white/5 rounded-lg"><MarkdownRenderer>{safeString(item)}</MarkdownRenderer></li>
+            ))}
+          </ul>
         </div>
       );
     case 'table':
       return (
-        <div className="p-6">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
+        <div>
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm">
+            <table className="w-full text-left border-collapse">
               <thead>
                 <tr>
-                  {slide.headers && Array.isArray(slide.headers) && slide.headers.map((h, i) => (
-                    <th key={i} className="border border-gray-300/50 p-3 bg-gradient-to-r from-blue-50 to-pink-50 font-bold text-gray-800">{safeString(h)}</th>
+                  {Array.isArray(slide.headers) && slide.headers.map((header, index) => (
+                    <th key={index} className="p-3 border-b-2 border-white/20 text-white font-semibold">{safeString(header)}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {slide.rows && Array.isArray(slide.rows) && slide.rows.map((row, i) => (
-                  <tr key={i}>
-                    {Array.isArray(row) && row.map((cell, j) => (
-                      <td key={j} className="border border-gray-300/50 p-3 text-gray-700">{safeString(cell)}</td>
+                {Array.isArray(slide.rows) && slide.rows.map((row, rowIndex) => (
+                  <tr key={rowIndex} className="bg-white/5 hover:bg-white/10">
+                    {Array.isArray(row) && row.map((cell, cellIndex) => (
+                      <td key={cellIndex} className="p-3 border-b border-white/10 text-white/90">{safeString(cell)}</td>
                     ))}
                   </tr>
                 ))}
@@ -1057,72 +1086,49 @@ function renderSlideContent(slide, slideIndex) {
           </div>
         </div>
       );
-    case 'list':
+    case 'quote':
       return (
-        <div className="p-6">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
-          <ul className="space-y-3 ml-6">
-            {slide.items && Array.isArray(slide.items) && slide.items.map((item, i) => (
-              <li key={i} className="flex items-center text-lg">
-                <input type="checkbox" checked={item?.checked || false} readOnly className="mr-3 scale-125" />
-                <span className="text-gray-700">{safeString(item?.text)}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <blockquote className="text-xl sm:text-2xl text-white/90 italic border-l-4 border-pink-400 pl-6">
+            {safeString(slide.text)}
+          </blockquote>
+          <cite className="mt-4 text-lg text-white/70 font-semibold">— {safeString(slide.author)}</cite>
+        </div>
+      );
+    case 'mermaid':
+      return (
+        <div>
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
+          <Mermaid chart={safeString(slide.diagram)} />
         </div>
       );
     case 'conclusion':
       return (
         <div className="flex flex-col items-center justify-center h-full text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl text-gray-800 font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500">{safeString(slide.title)}</h2>
-          <MarkdownRenderer>{safeString(slide.content)}</MarkdownRenderer>
-        </div>
-      );
-    case 'content-and-image':
-      return (
-        <div className="p-6">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
-          <div className="flex flex-col lg:flex-row gap-6">
-            <div className="flex-1">
-              <MarkdownRenderer>{safeString(slide.content)}</MarkdownRenderer>
-              {slide.bullets && Array.isArray(slide.bullets) && (
-                <ul className="mt-4 ml-6 space-y-2">
-                  {slide.bullets.map((b, i) => (
-                    <li key={i} className="text-lg text-gray-700"><MarkdownRenderer>{safeString(b)}</MarkdownRenderer></li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <div className="relative w-full h-72 mb-4">
-                <Image 
-                  src={safeString(slide.imageUrl)} 
-                  alt={safeString(slide.imageCaption || 'Slide image')} 
-                  fill
-                  className="rounded-xl shadow-lg object-contain" 
-                />
-              </div>
-              {slide.imageCaption && <div className="text-gray-600 text-base font-medium">{safeString(slide.imageCaption)}</div>}
-            </div>
-          </div>
-        </div>
-      );
-    case 'content-and-code':
-      return (
-        <div className="p-6">
-          <h2 className="text-2xl sm:text-3xl text-gray-800 font-bold mb-4">{safeString(slide.title)}</h2>
-          <div className="flex flex-col lg:flex-row gap-6">
-            <div className="flex-1">
-              <MarkdownRenderer>{safeString(slide.content)}</MarkdownRenderer>
-            </div>
-            <div className="flex-1">
-              <CodeBlock code={safeString(slide.code)} language={safeString(slide.language)} />
-            </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl text-white font-bold mb-4">{safeString(slide.title)}</h2>
+          <p className="text-lg sm:text-xl text-white/80 mb-6">{safeString(slide.summary)}</p>
+          <div className="w-full max-w-md">
+            <h3 className="text-xl font-semibold text-white mb-3">Key Takeaways:</h3>
+            <ul className="space-y-2 text-left">
+              {Array.isArray(slide.key_takeaways) && slide.key_takeaways.map((takeaway, index) => (
+                <li key={index} className="text-lg text-white/80 p-3 bg-white/5 rounded-lg flex items-start">
+                  <span className="text-green-400 mr-3">✓</span>
+                  <MarkdownRenderer>{safeString(takeaway)}</MarkdownRenderer>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       );
     default:
-      // Instead of returning the object, return a message.
-      return <div className="p-4 bg-red-50/80 backdrop-blur-sm border border-red-200/50 text-red-600 rounded-lg">Unsupported slide type: {slide.type}</div>;
+      return (
+        <div className="p-6">
+          <h2 className="text-2xl sm:text-3xl text-white font-bold mb-4">{safeString(slide.title || `Slide ${slideIndex + 1}`)}</h2>
+          <p className="text-white/80">This slide type '{safeString(slide.type)}' is not yet supported.</p>
+          <pre className="mt-4 p-4 bg-black/30 rounded-lg text-xs overflow-auto">
+            {JSON.stringify(slide, null, 2)}
+          </pre>
+        </div>
+      );
   }
 }

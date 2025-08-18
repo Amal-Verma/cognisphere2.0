@@ -9,7 +9,7 @@ export default function CrashCoursePageUI() {
 
 
       {/* Main Content */}
-      <main className="p-8">
+      <main className="">
         <Suspense fallback={
           <div className="p-8 text-center">
             <div className="text-xl font-medium">Loading crash course...</div>
