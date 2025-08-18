@@ -1,11 +1,14 @@
 # 🌐 CogniSphere  
-<div align="center">
-"Your AI-Powered Personal Learning Ecosystem"
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](#)  
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](#)  
-[![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)  
-[![Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen.svg)](#)  
+<div align="center">
+
+**Your AI-Powered Personal Learning Ecosystem**
+
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Amal-Verma/Collaborative-IDE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](../LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen.svg)]()
+
 </div>
 
 ## 📌 Problem: The Fragmented Learning Experience
@@ -54,10 +57,10 @@ With CogniSphere, learners can:
 - 📚 Upload documents (notes, PDFs, PPTs) or search topics.
 - 🎞 Get AI-generated courses & slides instantly.
 - 📑 Practice with flashcard assessments & quizzes for recall.
-- 🤖 Use a Socratic AI tutor for doubts and deeper exploration.
+- 🤖 Use a 3D AI tutor for doubts and deeper exploration.
 - 📊 Follow dynamic learning roadmaps with real-time performance analytics.
 
-**CogniSphere** = Affordable, accessible, and scalable learning without dependence on costly experts.
+**CogniSphere** = Affordable, accessible and scalable learning without dependence on costly experts.
 
 ## ✨ Key Features  
 
@@ -66,7 +69,7 @@ With CogniSphere, learners can:
 | 🔒 **Personal Library** | All learning materials intelligently structured | ✅ Active |
 | 🎞 **AI Presentations** | Docs → Slides + Speaker Notes | ✅ Active |
 | 📑 **Flashcards** | Recall-based assessment & reinforcement | ✅ Active |
-| 🤖 **Socratic Tutor** | Context-aware interactive Q&A | ✅ Active |
+| 🤖 **3D Tutor** | Context-aware interactive Q&A | ✅ Active |
 | 📝 **Dynamic Quizzes** | Auto-generated with remedial lessons | ✅ Active |
 | 📊 **Adaptive Roadmaps** | Personalized, real-time progress | ✅ Active |
 | 📱 **Cross-Platform** | Web + Mobile app | ✅ Active |
@@ -75,45 +78,45 @@ With CogniSphere, learners can:
 
 ```
 ┌═══════════════════════════════════════════════════════════════════════════════════════┐
-║ 🎨 FRONTEND LAYER ║
+║ 🎨 FRONTEND LAYER ║                                                                   ║
 ╠═══════════════════════════════════════════════════════════════════════════════════════╣
-║ ║
-║ 🌐 Next.js (Web App) 📱 React Native (Mobile App) ║
-║ ├─ Dashboard & Analytics ├─ Flashcards, Tutor Access ║
-║ ├─ Roadmap Visualization ├─ Interactive Lessons ║
-║ └─ Cross-Platform UI └─ Mobile-First Adoption ║
-║ ║
+║ ║                                                                                     ║
+║ 🌐 Next.js (Web App) 📱 React Native (Mobile App) ║                                  ║
+║ ├─ Dashboard & Analytics ├─ Flashcards, Tutor Access ║                                ║
+║ ├─ Roadmap Visualization ├─ Interactive Lessons ║                                     ║
+║ └─ Cross-Platform UI └─ Mobile-First Adoption ║                                       ║
+║ ║                                                                                     ║
 ╚═══════════════════════════════════════════════════════════════════════════════════════╝
 │
 ▼
 ┌═══════════════════════════════════════════════════════════════════════════════════════┐
-║ ⚙️ BACKEND & STORAGE ║
+║ ⚙️ BACKEND & STORAGE ║                                                                ║
 ╠═══════════════════════════════════════════════════════════════════════════════════════╣
-║ ║
-║ ⚙️ Next.js API Routes 🗄 Supabase PostgreSQL ║
-║ ├─ Authentication ├─ User Profiles & Course Data ║
-║ ├─ CRUD APIs ├─ Performance Tracking ║
-║ └─ Orchestration └─ ACID Transactions ║
-║ ║
-║ 📂 Supabase Storage ☁️ Cloud-Native Infra ║
-║ ├─ Notes, PDFs, PPTs ├─ Scalable Deployment ║
-║ └─ Media Assets └─ CDN for Fast Access ║
-║ ║
+║ ║                                                                                     ║
+║ ⚙️ Next.js API Routes 🗄 Supabase PostgreSQL ║                                        ║
+║ ├─ Authentication ├─ User Profiles & Course Data ║                                    ║
+║ ├─ CRUD APIs ├─ Performance Tracking ║                                                ║
+║ └─ Orchestration └─ ACID Transactions ║                                               ║
+║ ║                                                                                     ║
+║ 📂 Supabase Storage ☁️ Cloud-Native Infra ║                                          ║
+║ ├─ Notes, PDFs, PPTs ├─ Scalable Deployment ║                                         ║
+║ └─ Media Assets └─ CDN for Fast Access ║                                              ║
+║ ║                                                                                     ║
 ╚═══════════════════════════════════════════════════════════════════════════════════════╝
 │
 ▼
 ┌═══════════════════════════════════════════════════════════════════════════════════════┐
-║ 🤖 AI / ML LAYER ║
+║ 🤖 AI / ML LAYER ║                                                                    ║
 ╠═══════════════════════════════════════════════════════════════════════════════════════╣
-║ ║
-║ 🚀 FastAPI RAG Server 🔎 ChromaDB ║
-║ ├─ Document Ingestion ├─ Embeddings + Semantic Search ║
-║ ├─ Contextual Retrieval └─ Efficient Query Pipelines ║
-║ ║
-║ ✨ Gemini 2.0 Flash LLM 🧠 Adaptive AI ║
-║ ├─ Course & Slide Generation ├─ Roadmap Adaptation ║
-║ ├─ Socratic Tutor Conversations └─ Personalized Recommendations ║
-║ ║
+║ ║                                                                                     ║
+║ 🚀 FastAPI RAG Server 🔎 ChromaDB ║                                                  ║
+║ ├─ Document Ingestion ├─ Embeddings + Semantic Search ║                               ║
+║ ├─ Contextual Retrieval └─ Efficient Query Pipelines ║                                ║
+║ ║                                                                                     ║
+║ ✨ Gemini 2.0 Flash LLM 🧠 Adaptive AI ║                                             ║
+║ ├─ Course & Slide Generation ├─ Roadmap Adaptation ║                                  ║
+║ ├─ Socratic Tutor Conversations └─ Personalized Recommendations ║                     ║
+║ ║                                                                                     ║
 ╚═══════════════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -139,7 +142,31 @@ Frontend (Next.js + React Native) ↔ Backend (Next.js APIs + Supabase) ↔ AI L
 
 ![Flow Diagram](flow.png)
 
-## 🚀 Scalability & Business Model
+## 🚀 Quick Start
+
+### 📋 Prerequisites
+- **Node.js** v18+ and npm/yarn
+- **Python** 3.11+ and pip
+- **Supabase account** (for DB + storage)
+- **ChromaDB** (local or managed instance)
+- **Gemini 2.0 API key** (for AI generation)
+
+### ⚡ 1-Minute Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/cognisphere.git
+cd cognisphere
+
+# Frontend (Next.js)
+cd frontend && npm install && npm run dev
+
+# Backend (FastAPI)
+cd backend && pip install -r requirements.txt && uvicorn main:app --reload
+```
+Access the application at `http://localhost:3000` 🎉
+
+## 💹 Scalability & Business Model
 
 ### 📈 Scalability
 
@@ -171,7 +198,7 @@ This model drives mass adoption while ensuring sustainable revenue.
 
 ## 🎥 Demo
 
-- 📺 [Demo Video](#)
+- 📺 [Demo Video](demo_recording.mp4)
 - 🌐 [Live Prototype](#)
 
 ## 🔑 Why CogniSphere is Product-Ready
@@ -186,16 +213,25 @@ CogniSphere delivers the power of a complete learning infrastructure in one acce
 ## 🔮 Future Roadmap
 
 - 🌐 Multilingual support for global learners.
-- 🎙 Voice-enabled tutor for conversational learning.
-- 🧠 AI-driven learning style adaptation.
 - 🎓 Institutional dashboards for large-scale adoption.
 
 ## 🧩 Challenges & Learnings
 
-- Building robust RAG pipelines for diverse content.
 - Controlling API costs while scaling Gemini usage.
 - Designing UI/UX that is intuitive yet powerful.
 - Learned how to transform a fragmented market into a unified product ecosystem.
+
+## 🤖 AI Assistants in the Build Process
+
+CogniSphere was built leveraging cutting-edge AI assistants that accelerated ideation, coding and content generation:
+
+- ✍️ **GitHub Copilot** – Code autocompletion and boilerplate generation.  
+- 💬 **ChatGPT** – Brainstorming, debugging, and refining documentation.  
+- 🔮 **Gemini Pro (College Students)** – Core engine for roadmap generation, tutoring, and adaptive learning content.  
+- ⚡ **Bolt.new** – Rapid prototyping of frontend components.  
+- 🧾 **Claude** – Structuring reports, ensuring clarity, and polishing user-facing copy.  
+
+These AI assistants were not just supplementary — they helped us build faster, smarter and with a product-first mindset.
 
 ## 🙌 Acknowledgements
 
