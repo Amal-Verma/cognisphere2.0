@@ -585,11 +585,11 @@ function Landing({ onSignupSuccess }: LandingProps) {
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/5 backdrop-blur-3xl border-b border-white/10 z-40">
+      <nav className="fixed top-0 w-full bg-slate-900/90 backdrop-blur-3xl border-b border-slate-700/50 z-40">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/20">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500/30 to-purple-500/30 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-blue-400/30">
                 <Brain className="w-7 h-7 text-blue-400" />
               </div>
               <span className="text-2xl font-bold text-white ml-4">CogniSphere</span>
@@ -603,7 +603,7 @@ function Landing({ onSignupSuccess }: LandingProps) {
                   className={`text-lg font-medium transition-all duration-300 ${
                     currentPage === item.id 
                       ? 'text-blue-400' 
-                      : 'text-white hover:text-blue-300'
+                      : 'text-slate-200 hover:text-blue-300'
                   }`}
                 >
                   {item.name}
@@ -614,7 +614,7 @@ function Landing({ onSignupSuccess }: LandingProps) {
             <div className="hidden md:flex items-center space-x-4">
               <button 
                 onClick={() => setIsLoginOpen(true)}
-                className="text-white font-medium hover:text-blue-300 transition-colors text-lg px-4 py-2"
+                className="text-slate-200 font-medium hover:text-blue-300 transition-colors text-lg px-4 py-2"
               >
                 Sign In
               </button>
@@ -628,7 +628,7 @@ function Landing({ onSignupSuccess }: LandingProps) {
 
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-white p-2"
+              className="md:hidden text-slate-200 p-2"
             >
               {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
@@ -637,7 +637,7 @@ function Landing({ onSignupSuccess }: LandingProps) {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white/5 backdrop-blur-3xl border-t border-white/10">
+          <div className="md:hidden bg-slate-800/95 backdrop-blur-3xl border-t border-slate-600/50">
             <div className="px-6 py-6 space-y-6">
               {navigation.map((item) => (
                 <button
@@ -649,19 +649,19 @@ function Landing({ onSignupSuccess }: LandingProps) {
                   className={`block text-lg font-medium transition-colors ${
                     currentPage === item.id 
                       ? 'text-blue-400' 
-                      : 'text-white hover:text-blue-300'
+                      : 'text-slate-200 hover:text-blue-300'
                   }`}
                 >
                   {item.name}
                 </button>
               ))}
-              <div className="border-t border-white/10 pt-6 space-y-4">
+              <div className="border-t border-slate-600/50 pt-6 space-y-4">
                 <button 
                   onClick={() => {
                     setIsLoginOpen(true);
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full text-left text-white font-medium hover:text-blue-300 transition-colors text-lg"
+                  className="block w-full text-left text-slate-200 font-medium hover:text-blue-300 transition-colors text-lg"
                 >
                   Sign In
                 </button>
@@ -686,46 +686,46 @@ function Landing({ onSignupSuccess }: LandingProps) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black/20 backdrop-blur-3xl text-white py-20 border-t border-white/10">
+      <footer className="bg-slate-900/90 backdrop-blur-3xl text-white py-20 border-t border-slate-700/50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-10">
             <div>
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/20">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500/30 to-purple-500/30 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-blue-400/30">
                   <Brain className="w-7 h-7 text-blue-400" />
                 </div>
-                <span className="text-2xl font-bold ml-4">CogniSphere</span>
+                <span className="text-2xl font-bold text-white ml-4">CogniSphere</span>
               </div>
-              <p className="text-white/70 leading-relaxed text-lg">
+              <p className="text-slate-300 leading-relaxed text-lg">
                 Revolutionizing education through AI-powered personalized learning experiences.
               </p>
             </div>
             <div>
-              <h4 className="text-xl font-semibold mb-6">Product</h4>
+              <h4 className="text-xl font-semibold mb-6 text-white">Product</h4>
               <ul className="space-y-3">
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Features</a></li>
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Pricing</a></li>
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">API</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Features</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Pricing</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">API</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-xl font-semibold mb-6">Company</h4>
+              <h4 className="text-xl font-semibold mb-6 text-white">Company</h4>
               <ul className="space-y-3">
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">About</a></li>
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Careers</a></li>
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Contact</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">About</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Careers</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Contact</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-xl font-semibold mb-6">Support</h4>
+              <h4 className="text-xl font-semibold mb-6 text-white">Support</h4>
               <ul className="space-y-3">
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Help Center</a></li>
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Privacy Policy</a></li>
-                <li><a href="#" className="text-white/70 hover:text-white transition-colors text-lg">Terms of Service</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Help Center</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Privacy Policy</a></li>
+                <li><a href="#" className="text-slate-300 hover:text-white transition-colors text-lg">Terms of Service</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-white/10 mt-16 pt-10 text-center text-white/70 text-lg">
+          <div className="border-t border-slate-600/50 mt-16 pt-10 text-center text-slate-300 text-lg">
             <p>&copy; 2024 CogniSphere. All rights reserved.</p>
           </div>
         </div>
