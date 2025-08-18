@@ -54,24 +54,6 @@ export default function GeneratePage() {
     try {
       const roadmapData: RoadmapNode[] = await generateRoadmap(promptToUse, syllabusToUse);
       
-      // Save roadmap to Supabase
-      const response = await fetch('/api/roadmap/save', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          roadmapData,
-          prompt: promptToUse,
-          syllabus: syllabusToUse || null
-        }),
-      });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to save roadmap');
-      }
-      
       // Still store in localStorage for backward compatibility
       localStorage.setItem("generatedRoadmap", JSON.stringify(roadmapData));
       localStorage.setItem("roadmapPrompt", promptToUse);
