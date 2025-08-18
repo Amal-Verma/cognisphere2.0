@@ -198,8 +198,8 @@ This model drives mass adoption while ensuring sustainable revenue.
 
 ## 🎥 Demo
 
-- 📺 [Demo Video](demo_video.mp4)
-- 🌐 [Live Prototype](https://launchpad-mappa-git-main-amal-vermas-projects.vercel.app/)
+- 📺 [Demo Video](https://drive.google.com/file/d/1RRpRLzMXCOpfMH36hEid-LavhpQJ9yl7/view?usp=sharing)
+- 🌐 [Live Prototype](https://launchpad-mappa.vercel.app/)
 
 ## 🔑 Why CogniSphere is Product-Ready
 
