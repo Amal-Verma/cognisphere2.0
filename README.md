@@ -2,7 +2,7 @@
 
 "Your AI-Powered Personal Learning Ecosystem"
 
-## 📌 Problem — The Fragmented Learning Experience
+## 📌 Problem: The Fragmented Learning Experience
 
 Self-directed learners today face a broken ecosystem:
 
@@ -87,6 +87,7 @@ With CogniSphere, learners can:
 4. 🧑‍🏫 **Socratic Tutor** → Real-time Q&A and concept reinforcement.
 5. 📝 **Assessment & Flashcards** → Quizzes, recall-based learning, remedial lessons.
 6. 📊 **Progress Tracking** → Roadmap updates dynamically with mastery scores.
+![Flow](launchpad-Mappa/flow.png)
 
 ## 🚀 Scalability & Business Model
 
@@ -122,9 +123,6 @@ This model drives mass adoption while ensuring sustainable revenue.
 
 - 📺 [Demo Video](#)
 - 🌐 [Live Prototype](#)
-
-### 📸 Flow of the App:
-![Flow](launchpad-Mappa\flow.png)
 
 ## 🔑 Why CogniSphere is Product-Ready
 
