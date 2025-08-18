@@ -1,0 +1,119 @@
+{
+  "slides": [
+    {
+      "type": "title",
+      "title": "Presentation Title",
+      "subtitle": "Subtitle or Tagline",
+      "author": "Author Name",
+      "date": "2025-08-02",
+      "script": "Welcome to this presentation, titled 'Presentation Title'. We're glad to have you here today, August 2nd, 2025. My name is Author Name, and I'll be your guide."
+    },
+    {
+      "type": "section",
+      "title": "Section Title",
+      "description": "A brief description of this section.",
+      "script": "Let's begin with our first section. Here, we'll provide a brief overview of what's to come."
+    },
+    {
+      "type": "content",
+      "title": "Content Slide",
+      "content": "This is a standard content slide. You can use **bold**, _italic_, and other markdown formatting.",
+      "bullets": [
+        "First bullet point",
+        "Second bullet point with **bold** text",
+        "Third bullet point with _italic_ text"
+      ],
+      "script": "This is a standard content slide. It supports markdown for text formatting, like **bold** and _italic_ text. As you can see, we also have a list of bullet points to highlight key information."
+    },
+    {
+      "type": "content",
+      "title": "Markdown Features",
+      "content": "Here's some markdown content:\n\n* Item 1\n* Item 2\n\n**Bold text** and *italic text*.\n\n> A blockquote.",
+      "script": "This slide demonstrates more markdown features. We have a list, bold and italic text, and even a blockquote. This allows for rich text formatting within a single content block."
+    },
+    {
+      "type": "image",
+      "title": "Image Slide",
+      "imageUrl": "",
+      "caption": "This is a sample image from CDN.",
+      "script": "Images are a great way to make content more engaging. This slide demonstrates embedding an image from a remote Content Delivery Network, with a caption below."
+    },
+    {
+      "type": "image",
+      "title": "Local Image Slide",
+      "imageUrl": "/vercel.svg",
+      "caption": "This is a local SVG image.",
+      "script": "In addition to remote images, we can also use local assets. Here is an example of a local SVG image, which is great for icons and logos."
+    },
+    {
+      "type": "mermaid",
+      "title": "Mermaid Diagram Slide",
+      "diagram": "graph TD;\n    A[Start] --> B{Is it working?};\n    B -- Yes --> C[Continue];\n    B -- No --> D[Fix it];\n    D --> B;",
+      "caption": "A simple Mermaid flowchart.",
+      "script": "For more technical topics, we can include diagrams using Mermaid syntax. This slide shows a simple flowchart. It starts, checks if something is working, and provides paths for both 'Yes' and 'No' outcomes."
+    },
+    {
+      "type": "quote",
+      "title": "Quote Slide",
+      "quote": "The best way to predict the future is to invent it.",
+      "author": "Alan Kay",
+      "script": "To add some inspiration, we can use a quote slide. As the great Alan Kay said: 'The best way to predict the future is to invent it.'"
+    },
+    {
+      "type": "code",
+      "title": "Code Example Slide",
+      "language": "javascript",
+      "code": "function helloWorld() {\n  console.log('Hello, world!');\n}",
+      "script": "Code examples are essential for technical presentations. This slide displays a simple 'hello world' function in JavaScript, complete with syntax highlighting."
+    },
+    {
+      "type": "content-and-image",
+      "title": "Hybrid: Content and Image",
+      "content": "This slide demonstrates combining textual content with a supporting visual.",
+      "bullets": [
+        "Enhances comprehension",
+        "Breaks up text-heavy slides",
+        "Provides visual context"
+      ],
+      "imageUrl": "",
+      "imageCaption": "Visuals make concepts stick.",
+      "script": "This slide demonstrates a hybrid layout, combining text with a supporting visual. This approach enhances comprehension and provides valuable context."
+    },
+    {
+      "type": "content-and-code",
+      "title": "Hybrid: Content and Code",
+      "content": "Here we can explain a code snippet in more detail, providing context and usage examples.",
+      "language": "python",
+      "code": "def greet(name):\n  \"\"\"A simple function to greet someone.\"\"\"\n  return f\"Hello, {name}!\"",
+      "script": "Here we see another hybrid layout, this time presenting a code snippet alongside a detailed explanation. This is great for tutorials and technical deep-dives."
+    },
+    {
+      "type": "table",
+      "title": "Table Slide",
+      "headers": ["Feature", "Description"],
+      "rows": [
+        ["Formatting", "Bold, Italic, Lists, etc."],
+        ["Images", "CDN or local path"],
+        ["Diagrams", "Mermaid.js support"],
+        ["Tables", "Tabular data"]
+      ],
+      "script": "Tables are perfect for organizing structured data. Here, we have a table outlining various features like formatting, image support, diagrams, and tables themselves."
+    },
+    {
+      "type": "list",
+      "title": "Checklist Slide",
+      "items": [
+        { "text": "First item", "checked": true },
+        { "text": "Second item", "checked": false },
+        { "text": "Third item", "checked": true }
+      ],
+      "script": "Checklists are useful for tracking tasks or requirements. This slide shows a simple list with items that are both completed and pending."
+    },
+    {
+      "type": "conclusion",
+      "title": "Conclusion Slide",
+      "content": "Thank you for your attention! Any questions?",
+      "script": "And that brings us to the end of our presentation. Thank you for your attention! We would now be happy to answer any questions you may have."
+    }
+  ]
+}
