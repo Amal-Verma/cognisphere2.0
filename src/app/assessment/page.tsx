@@ -53,15 +53,39 @@ export default function AssessmentPage() {
       const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true');
       
       if (isDemoMode) {
-        // Use dummy data in demo mode
-        setAssessmentData(dummyAssessmentData);
-        setCurrentQuestionIndex(dummyAssessmentState.currentQuestionIndex);
-        setUserAnswers(new Array(dummyAssessmentData.questions.length).fill([]));
-        setTimeRemaining(dummyAssessmentState.timeRemaining);
-        setIsTestStarted(dummyAssessmentState.isTestStarted);
-        setIsTestCompleted(dummyAssessmentState.isTestCompleted);
-        setScore(dummyAssessmentState.score);
-        setShowResults(dummyAssessmentState.showResults);
+        // Store dummy data in localStorage with specific dummy variable names
+        localStorage.setItem("dummyAssessmentData", JSON.stringify(dummyAssessmentData));
+        localStorage.setItem("dummyAssessmentState", JSON.stringify(dummyAssessmentState));
+        
+        // Load from dummy localStorage variables in demo mode
+        const dummySavedAssessment = localStorage.getItem("dummyAssessmentData");
+        const dummySavedState = localStorage.getItem("dummyAssessmentState");
+        
+        if (dummySavedAssessment) {
+          const parsedAssessment: AssessmentData = JSON.parse(dummySavedAssessment);
+          setAssessmentData(parsedAssessment);
+          setUserAnswers(new Array(parsedAssessment.questions.length).fill([]));
+          
+          if (dummySavedState) {
+            const state = JSON.parse(dummySavedState);
+            setCurrentQuestionIndex(state.currentQuestionIndex);
+            setTimeRemaining(state.timeRemaining);
+            setIsTestStarted(state.isTestStarted);
+            setIsTestCompleted(state.isTestCompleted);
+            setScore(state.score);
+            setShowResults(state.showResults);
+          }
+        } else {
+          // Fallback to original dummy data
+          setAssessmentData(dummyAssessmentData);
+          setCurrentQuestionIndex(dummyAssessmentState.currentQuestionIndex);
+          setUserAnswers(new Array(dummyAssessmentData.questions.length).fill([]));
+          setTimeRemaining(dummyAssessmentState.timeRemaining);
+          setIsTestStarted(dummyAssessmentState.isTestStarted);
+          setIsTestCompleted(dummyAssessmentState.isTestCompleted);
+          setScore(dummyAssessmentState.score);
+          setShowResults(dummyAssessmentState.showResults);
+        }
       } else {
         // Try to load from localStorage (for real assessment data)
         const savedAssessment = localStorage.getItem("currentAssessment");
@@ -97,15 +121,39 @@ export default function AssessmentPage() {
   useEffect(() => {
     const handleHashChange = () => {
       if (typeof window !== 'undefined' && window.location.hash.includes('demo=true')) {
+        // Store dummy data in localStorage with specific dummy variable names
+        localStorage.setItem("dummyAssessmentData", JSON.stringify(dummyAssessmentData));
+        localStorage.setItem("dummyAssessmentState", JSON.stringify(dummyAssessmentState));
+        
         // Load dummy data if demo mode is activated
-        setAssessmentData(dummyAssessmentData);
-        setCurrentQuestionIndex(dummyAssessmentState.currentQuestionIndex);
-        setUserAnswers(new Array(dummyAssessmentData.questions.length).fill([]));
-        setTimeRemaining(dummyAssessmentState.timeRemaining);
-        setIsTestStarted(dummyAssessmentState.isTestStarted);
-        setIsTestCompleted(dummyAssessmentState.isTestCompleted);
-        setScore(dummyAssessmentState.score);
-        setShowResults(dummyAssessmentState.showResults);
+        const dummySavedAssessment = localStorage.getItem("dummyAssessmentData");
+        const dummySavedState = localStorage.getItem("dummyAssessmentState");
+        
+        if (dummySavedAssessment) {
+          const parsedAssessment: AssessmentData = JSON.parse(dummySavedAssessment);
+          setAssessmentData(parsedAssessment);
+          setUserAnswers(new Array(parsedAssessment.questions.length).fill([]));
+          
+          if (dummySavedState) {
+            const state = JSON.parse(dummySavedState);
+            setCurrentQuestionIndex(state.currentQuestionIndex);
+            setTimeRemaining(state.timeRemaining);
+            setIsTestStarted(state.isTestStarted);
+            setIsTestCompleted(state.isTestCompleted);
+            setScore(state.score);
+            setShowResults(state.showResults);
+          }
+        } else {
+          // Fallback to original dummy data
+          setAssessmentData(dummyAssessmentData);
+          setCurrentQuestionIndex(dummyAssessmentState.currentQuestionIndex);
+          setUserAnswers(new Array(dummyAssessmentData.questions.length).fill([]));
+          setTimeRemaining(dummyAssessmentState.timeRemaining);
+          setIsTestStarted(dummyAssessmentState.isTestStarted);
+          setIsTestCompleted(dummyAssessmentState.isTestCompleted);
+          setScore(dummyAssessmentState.score);
+          setShowResults(dummyAssessmentState.showResults);
+        }
       }
     };
 
@@ -140,6 +188,53 @@ export default function AssessmentPage() {
     setScore(totalScore)
   }, [assessmentData, userAnswers])
 
+  // Helper function to calculate score immediately (without setState delay)
+  const calculateFinalScore = useCallback(() => {
+    if (!assessmentData) return 0;
+    
+    let totalScore = 0
+
+    assessmentData.questions.forEach((question, index) => {
+      const userAnswer = userAnswers[index] || []
+      const correctAnswer = question.answers
+
+      if (userAnswer.length === 0) return // No answer given
+
+      // Simple scoring: 1 point only if all correct answers are selected and no wrong answers
+      const userAnswerSorted = [...userAnswer].sort()
+      const correctAnswerSorted = [...correctAnswer].sort()
+
+      // Check if arrays are exactly equal
+      if (userAnswerSorted.length === correctAnswerSorted.length &&
+        userAnswerSorted.every((val, i) => val === correctAnswerSorted[i])) {
+        totalScore += 1
+      }
+    })
+
+    return totalScore
+  }, [assessmentData, userAnswers])
+
+  // Helper function to advance current index in roadmap
+  const advanceCurrentIndex = useCallback(() => {
+    try {
+      const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true')
+      
+      if (isDemoMode) {
+        // Update dummy current index
+        const currentDummyIndex = parseInt(localStorage.getItem("dummyRoadmapCurrentIndex") || "0", 10)
+        const newDummyIndex = currentDummyIndex + 1
+        localStorage.setItem("dummyRoadmapCurrentIndex", newDummyIndex.toString())
+      } else {
+        // Update regular current index
+        const currentIndex = parseInt(localStorage.getItem("roadmapCurrentIndex") || "0", 10)
+        const newIndex = currentIndex + 1
+        localStorage.setItem("roadmapCurrentIndex", newIndex.toString())
+      }
+    } catch (error) {
+      console.error("Error advancing current index:", error)
+    }
+  }, [])
+
   // Timer logic
   useEffect(() => {
     if (!isTestStarted || isTestCompleted || !assessmentData) return
@@ -150,6 +245,16 @@ export default function AssessmentPage() {
           setIsTestCompleted(true)
           calculateScore()
           setShowResults(true)
+          
+          // Check if user scored 60% or higher to advance to next node when time runs out
+          const maxPossibleScore = assessmentData?.questions.length || 0
+          const finalScore = calculateFinalScore() // Calculate score immediately
+          const percentage = maxPossibleScore > 0 ? (finalScore / maxPossibleScore) * 100 : 0
+          
+          if (percentage >= 60) {
+            advanceCurrentIndex()
+          }
+          
           return 0
         }
         return prev - 1
@@ -157,7 +262,7 @@ export default function AssessmentPage() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [isTestStarted, isTestCompleted, calculateScore, assessmentData])
+  }, [isTestStarted, isTestCompleted, calculateScore, assessmentData, calculateFinalScore, advanceCurrentIndex])
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -200,6 +305,15 @@ export default function AssessmentPage() {
     setIsTestCompleted(true)
     calculateScore()
     setShowResults(true)
+    
+    // Check if user scored 60% or higher to advance to next node
+    const maxPossibleScore = assessmentData?.questions.length || 0
+    const finalScore = calculateFinalScore() // Calculate score immediately
+    const percentage = maxPossibleScore > 0 ? (finalScore / maxPossibleScore) * 100 : 0
+    
+    if (percentage >= 60) {
+      advanceCurrentIndex()
+    }
   }
 
   const handleStartTest = () => {

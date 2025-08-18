@@ -45,4 +45,4 @@ export const dummyPrompt = "I want to learn web development from scratch and bec
 
 export const dummyGeneratedAt = new Date().toISOString();
 
-export const dummyCurrentNodeIndex = 2;
+export const dummyCurrentNodeIndex = 0;

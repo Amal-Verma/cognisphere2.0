@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Nunito } from "next/font/google";
 import { dummyRoadmap, dummyPrompt, dummyGeneratedAt, dummyCurrentNodeIndex } from "./dummydata";
+import { generateAssessment } from "@/utlis/generate/assesment";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock, Circle, Play, ArrowDown, ArrowRight, ArrowLeft, BookOpen, ClipboardCheck, Sparkles } from "lucide-react";
@@ -63,11 +64,15 @@ const Connector = ({
 const RoadmapNode = ({ 
   node, 
   status, 
-  index
+  index,
+  onTestNodeClick,
+  isGeneratingAssessment
 }: { 
   node: RoadmapNode; 
   status: 'completed' | 'current' | 'pending';
   index: number;
+  onTestNodeClick?: (node: RoadmapNode) => void;
+  isGeneratingAssessment?: boolean;
 }) => {
   const getStatusIcon = () => {
     switch (status) {
@@ -185,16 +190,12 @@ const RoadmapNode = ({
               )}
               {status === 'current' && node.type === 'test' && (
                 <Button 
-                  onClick={() => {
-                    // Redirect to assessment page with demo mode if roadmap is in demo mode
-                    const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true');
-                    const assessmentUrl = isDemoMode ? '/assessment#demo=true' : '/assessment';
-                    window.location.href = assessmentUrl;
-                  }}
-                  className="mt-3 w-full shadow-lg text-xs bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+                  onClick={() => onTestNodeClick?.(node)}
+                  disabled={isGeneratingAssessment}
+                  className="mt-3 w-full shadow-lg text-xs bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white disabled:opacity-50"
                   size="sm"
                 >
-                  Take Assessment
+                  {isGeneratingAssessment ? 'Generating Assessment...' : 'Take Assessment'}
                 </Button>
               )}
             </div>
@@ -208,6 +209,7 @@ const RoadmapNode = ({
 export default function RoadmapPage({ n = 3 }: { n?: number }) {
   const [roadmapData, setRoadmapData] = useState<RoadmapNode[]>([]);
   const [loading, setLoading] = useState(true);
+  const [generatingAssessment, setGeneratingAssessment] = useState(false);
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [generatedAt, setGeneratedAt] = useState<string>("");
   const [currentNodeIndex, setCurrentNodeIndex] = useState<number>(1);
@@ -219,11 +221,11 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
       const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true');
       
       if (isDemoMode) {
-        // Use dummy data in demo mode
-        localStorage.setItem("generatedRoadmap", JSON.stringify(dummyRoadmap));
-        localStorage.setItem("roadmapPrompt", dummyPrompt);
-        localStorage.setItem("roadmapGeneratedAt", dummyGeneratedAt);
-        localStorage.setItem("roadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+        // Store dummy data in localStorage with specific dummy variable names
+        localStorage.setItem("dummyGeneratedRoadmap", JSON.stringify(dummyRoadmap));
+        localStorage.setItem("dummyRoadmapPrompt", dummyPrompt);
+        localStorage.setItem("dummyRoadmapGeneratedAt", dummyGeneratedAt);
+        localStorage.setItem("dummyRoadmapCurrentIndex", dummyCurrentNodeIndex.toString());
       }
       
       // Check for URL hash to override current node index
@@ -236,30 +238,67 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
         }
       }
       
-      const savedRoadmap = localStorage.getItem("generatedRoadmap");
-      const savedPrompt = localStorage.getItem("roadmapPrompt");
-      const savedTimestamp = localStorage.getItem("roadmapGeneratedAt");
-      const savedCurrentIndex = localStorage.getItem("roadmapCurrentIndex");
-      
-      if (savedRoadmap) {
-        const parsedRoadmap: RoadmapNode[] = JSON.parse(savedRoadmap);
-        setRoadmapData(parsedRoadmap);
+      // Load data based on demo mode
+      if (isDemoMode) {
+        // Load from dummy localStorage variables in demo mode
+        const dummySavedRoadmap = localStorage.getItem("dummyGeneratedRoadmap");
+        const dummySavedPrompt = localStorage.getItem("dummyRoadmapPrompt");
+        const dummySavedTimestamp = localStorage.getItem("dummyRoadmapGeneratedAt");
+        const dummySavedCurrentIndex = localStorage.getItem("dummyRoadmapCurrentIndex");
+        
+        if (dummySavedRoadmap) {
+          const parsedRoadmap: RoadmapNode[] = JSON.parse(dummySavedRoadmap);
+          setRoadmapData(parsedRoadmap);
+        } else {
+          setRoadmapData(dummyRoadmap);
+        }
+        
+        if (dummySavedPrompt) {
+          setUserPrompt(dummySavedPrompt);
+        } else {
+          setUserPrompt(dummyPrompt);
+        }
+        
+        if (dummySavedTimestamp) {
+          setGeneratedAt(dummySavedTimestamp);
+        } else {
+          setGeneratedAt(dummyGeneratedAt);
+        }
+        
+        if (overrideCurrentIndex !== null) {
+          setCurrentNodeIndex(overrideCurrentIndex);
+        } else if (dummySavedCurrentIndex) {
+          setCurrentNodeIndex(parseInt(dummySavedCurrentIndex, 10));
+        } else {
+          setCurrentNodeIndex(dummyCurrentNodeIndex);
+        }
       } else {
-        setRoadmapData(defaultRoadmap);
-      }
-      
-      if (savedPrompt) {
-        setUserPrompt(savedPrompt);
-      }
-      
-      if (savedTimestamp) {
-        setGeneratedAt(savedTimestamp);
-      }
-      
-      if (overrideCurrentIndex !== null) {
-        setCurrentNodeIndex(overrideCurrentIndex);
-      } else if (savedCurrentIndex) {
-        setCurrentNodeIndex(parseInt(savedCurrentIndex, 10));
+        // Load from regular localStorage variables in normal mode
+        const savedRoadmap = localStorage.getItem("generatedRoadmap");
+        const savedPrompt = localStorage.getItem("roadmapPrompt");
+        const savedTimestamp = localStorage.getItem("roadmapGeneratedAt");
+        const savedCurrentIndex = localStorage.getItem("roadmapCurrentIndex");
+        
+        if (savedRoadmap) {
+          const parsedRoadmap: RoadmapNode[] = JSON.parse(savedRoadmap);
+          setRoadmapData(parsedRoadmap);
+        } else {
+          setRoadmapData(defaultRoadmap);
+        }
+        
+        if (savedPrompt) {
+          setUserPrompt(savedPrompt);
+        }
+        
+        if (savedTimestamp) {
+          setGeneratedAt(savedTimestamp);
+        }
+        
+        if (overrideCurrentIndex !== null) {
+          setCurrentNodeIndex(overrideCurrentIndex);
+        } else if (savedCurrentIndex) {
+          setCurrentNodeIndex(parseInt(savedCurrentIndex, 10));
+        }
       }
     } catch (error) {
       console.error("Error loading roadmap from localStorage:", error);
@@ -274,10 +313,11 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
     const handleHashChange = () => {
       if (typeof window !== 'undefined') {
         if (window.location.hash.includes('demo=true')) {
-          localStorage.setItem("generatedRoadmap", JSON.stringify(dummyRoadmap));
-          localStorage.setItem("roadmapPrompt", dummyPrompt);
-          localStorage.setItem("roadmapGeneratedAt", dummyGeneratedAt);
-          localStorage.setItem("roadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+          // Store dummy data in localStorage with specific dummy variable names
+          localStorage.setItem("dummyGeneratedRoadmap", JSON.stringify(dummyRoadmap));
+          localStorage.setItem("dummyRoadmapPrompt", dummyPrompt);
+          localStorage.setItem("dummyRoadmapGeneratedAt", dummyGeneratedAt);
+          localStorage.setItem("dummyRoadmapCurrentIndex", dummyCurrentNodeIndex.toString());
           
           setRoadmapData(dummyRoadmap);
           setUserPrompt(dummyPrompt);
@@ -311,6 +351,73 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
       </div>
     );
   }
+
+  // Function to generate assessment for test nodes
+  const handleTestNodeClick = async (node: RoadmapNode) => {
+    try {
+      setGeneratingAssessment(true);
+      
+      const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true');
+      
+      // Check if assessment already exists
+      const existingAssessment = isDemoMode 
+        ? localStorage.getItem("dummyAssessmentData")
+        : localStorage.getItem("currentAssessment");
+      
+      if (existingAssessment) {
+        // Assessment already exists, navigate to it
+        const assessmentUrl = isDemoMode ? '/assessment#demo=true' : '/assessment';
+        window.location.href = assessmentUrl;
+        return;
+      }
+      
+      if (isDemoMode) {
+        // In demo mode, just use the existing dummy data instead of generating new assessment
+        const assessmentUrl = '/assessment#demo=true';
+        window.location.href = assessmentUrl;
+        return;
+      }
+      
+      // Generate new assessment (only for non-demo mode)
+      console.log('Generating assessment for:', node.title, node.description);
+      const assessmentQuestions = await generateAssessment(
+        node.title, 
+        node.description, 
+        userPrompt
+      );
+      
+      // Convert from generation format to assessment page format
+      const assessmentData = {
+        questions: assessmentQuestions.map(q => ({
+          question: q.question,
+          options: q.options,
+          answers: q.answer // Note: 'answer' from generation becomes 'answers' in assessment
+        }))
+      };
+      
+      // Store the generated assessment
+      localStorage.setItem("currentAssessment", JSON.stringify(assessmentData));
+      localStorage.setItem("assessmentProgress", JSON.stringify({
+        currentQuestionIndex: 0,
+        userAnswers: new Array(assessmentData.questions.length).fill([]),
+        timeRemaining: 900,
+        isTestStarted: false,
+        isTestCompleted: false,
+        score: 0,
+        showResults: false
+      }));
+      
+      // Navigate to assessment page
+      window.location.href = '/assessment';
+      
+    } catch (error) {
+      console.error('Error generating assessment:', error);
+      alert('Failed to generate assessment. Please try again.');
+    } finally {
+      setGeneratingAssessment(false);
+    }
+  };
+  
   const getNodeStatus = (index: number): 'completed' | 'current' | 'pending' => {
     if (index < currentNodeIndex) return 'completed';
     if (index === currentNodeIndex) return 'current';
@@ -522,6 +629,8 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
                             node={node}
                             status={status}
                             index={item.nodeIndex}
+                            onTestNodeClick={handleTestNodeClick}
+                            isGeneratingAssessment={generatingAssessment}
                           />
                         </div>
                       );

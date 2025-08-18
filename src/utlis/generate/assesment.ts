@@ -1,5 +1,5 @@
 import { getGeminiResponse } from "./gemini";
-import { assement, CourseSkeleton } from "./type";
+import { assement } from "./type";
 
 export async function generateAssessment(title: string, Description: string, userPrompt: string = ""): Promise<assement[]> {
   const commonRules = 
