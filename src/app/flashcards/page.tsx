@@ -61,16 +61,16 @@ export default function FlashcardsPage() {
   const visibleCards = getVisibleCards();
 
   return (
-    <div className={`${nunito.className} min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4`}>
+    <div className={`${nunito.className} min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 py-8 px-4`}>
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-extrabold mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Flashcards
             </span>
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-white/70">
             Card {currentIndex + 1} of {cards.length}
           </p>
         </div>
@@ -110,13 +110,13 @@ export default function FlashcardsPage() {
                   <div className={`flip-card h-full cursor-pointer ${index === 0 && isFlipped ? 'flipped' : ''}`} onClick={index === 0 ? handleFlip : undefined}>
                     {/* Front of card */}
                     <div className="flip-card-front">
-                      <Card className="w-full h-full bg-white border-0 shadow-xl !p-0 !gap-0">
+                      <Card className="w-full h-full bg-slate-800 border border-slate-700 shadow-2xl !p-0 !gap-0 hover:bg-slate-750 transition-all duration-300">
                         <CardContent className="p-8 w-full h-full !px-8">
                           <div className="text-center h-full flex flex-col justify-center">
-                            <div className="text-lg font-semibold text-blue-600 mb-6">
-                              Question
+                            <div className="text-lg font-semibold text-blue-400 mb-6">
+                           Question
                             </div>
-                            <div className="text-lg leading-relaxed">
+                            <div className="text-lg leading-relaxed text-white">
                               <QuestionRenderer>{card.front}</QuestionRenderer>
                             </div>
                           </div>
@@ -126,13 +126,13 @@ export default function FlashcardsPage() {
                     
                     {/* Back of card */}
                     <div className="flip-card-back">
-                      <Card className="w-full h-full bg-white border-0 shadow-xl !p-0 !gap-0">
+                      <Card className="w-full h-full bg-slate-800 border border-slate-700 shadow-2xl !p-0 !gap-0 hover:bg-slate-750 transition-all duration-300">
                         <CardContent className="p-8 w-full h-full !px-8">
                           <div className="text-center h-full flex flex-col justify-center">
-                            <div className="text-lg font-semibold text-purple-600 mb-6">
+                            <div className="text-lg font-semibold text-purple-400 mb-6">
                               Answer
                             </div>
-                            <div className="text-lg leading-relaxed">
+                            <div className="text-lg leading-relaxed text-white">
                               <QuestionRenderer>{card.back}</QuestionRenderer>
                             </div>
                           </div>
@@ -150,7 +150,7 @@ export default function FlashcardsPage() {
                           }}
                           disabled={currentIndex >= cards.length - 1 || isFalling}
                           size="sm"
-                          className="px-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
+                          className="px-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 shadow-lg backdrop-blur-xl border border-white/20"
                         >
                           Next
                           <ChevronRight className="w-4 h-4 ml-2" />
