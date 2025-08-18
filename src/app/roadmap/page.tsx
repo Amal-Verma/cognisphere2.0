@@ -2,10 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { Nunito } from "next/font/google";
+import { dummyRoadmap, dummyPrompt, dummyGeneratedAt, dummyCurrentNodeIndex } from "./dummydata";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock, Circle, Play, ArrowDown, ArrowRight, ArrowLeft, BookOpen, ClipboardCheck, Sparkles } from "lucide-react";
-import type { RoadmapNode } from "../../utlis/generate/type";
+
+export type RoadmapNode = {
+  title: string;
+  description: string;
+  type: 'course' | 'test';
+}
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -22,9 +28,9 @@ const Connector = ({
 }) => {
   const getConnectorStyle = () => {
     if (isActive) {
-      return 'text-blue-600 drop-shadow-lg';
+      return 'text-blue-400 drop-shadow-lg';
     }
-    return 'text-gray-500';
+    return 'text-slate-400';
   };
 
   const getConnectorIcon = () => {
@@ -47,7 +53,7 @@ const Connector = ({
 
   return (
     <div className={getConnectorContainer()}>
-      <div className={`${isActive ? 'opacity-100 scale-110' : 'opacity-70'} transition-all duration-300 bg-white rounded-full p-2 shadow-lg border-2 ${isActive ? 'border-blue-200' : 'border-gray-200'}`}>
+      <div className={`${isActive ? 'opacity-100 scale-110' : 'opacity-70'} transition-all duration-300 bg-slate-800/80 backdrop-blur-sm rounded-full p-2 shadow-lg border-2 ${isActive ? 'border-blue-400/50' : 'border-slate-600/50'}`}>
         {getConnectorIcon()}
       </div>
     </div>
@@ -89,11 +95,11 @@ const RoadmapNode = ({
     const baseStyle = node.type === 'test' ? 'border-l-4 border-l-orange-400' : 'border-l-4 border-l-blue-400';
     switch (status) {
       case 'completed':
-        return `bg-green-50/80 border-green-200 shadow-green-100 ${baseStyle}`;
+        return `bg-emerald-500/10 backdrop-blur-sm border-emerald-400/30 shadow-emerald-500/20 ${baseStyle}`;
       case 'current':
-        return `bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200 shadow-blue-100 ring-2 ring-blue-200 ring-opacity-50 ${baseStyle}`;
+        return `bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm border-blue-400/40 shadow-blue-500/30 ring-2 ring-blue-400/30 ${baseStyle}`;
       case 'pending':
-        return `bg-gray-50/60 border-gray-200 shadow-gray-100 ${baseStyle}`;
+        return `bg-slate-700/60 backdrop-blur-sm border-slate-600/40 shadow-slate-700/20 ${baseStyle}`;
     }
   };
 
@@ -135,12 +141,12 @@ const RoadmapNode = ({
             </div>
             <div className="flex-1 min-w-0">
               <h3 className={`text-base font-bold mb-2 ${
-                status === 'pending' ? 'text-gray-600' : 'text-gray-800'
+                status === 'pending' ? 'text-slate-300' : 'text-white'
               }`}>
                 {node.title}
               </h3>
               <p className={`text-xs leading-relaxed ${
-                status === 'pending' ? 'text-gray-500' : 'text-gray-600'
+                status === 'pending' ? 'text-slate-400' : 'text-slate-200'
               }`}>
                 {node.description}
               </p>
@@ -180,8 +186,10 @@ const RoadmapNode = ({
               {status === 'current' && node.type === 'test' && (
                 <Button 
                   onClick={() => {
-                    // Redirect to test/assessment page
-                    window.location.href = `/test`;
+                    // Redirect to assessment page with demo mode if roadmap is in demo mode
+                    const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true');
+                    const assessmentUrl = isDemoMode ? '/assessment#demo=true' : '/assessment';
+                    window.location.href = assessmentUrl;
                   }}
                   className="mt-3 w-full shadow-lg text-xs bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
                   size="sm"
@@ -207,6 +215,27 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
   useEffect(() => {
     // Load roadmap and prompt from localStorage or use default
     try {
+      // Check if demo mode is enabled via URL hash
+      const isDemoMode = typeof window !== 'undefined' && window.location.hash.includes('demo=true');
+      
+      if (isDemoMode) {
+        // Use dummy data in demo mode
+        localStorage.setItem("generatedRoadmap", JSON.stringify(dummyRoadmap));
+        localStorage.setItem("roadmapPrompt", dummyPrompt);
+        localStorage.setItem("roadmapGeneratedAt", dummyGeneratedAt);
+        localStorage.setItem("roadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+      }
+      
+      // Check for URL hash to override current node index
+      let overrideCurrentIndex = null;
+      if (typeof window !== 'undefined' && window.location.hash.startsWith('#node=')) {
+        const nodeFromHash = parseInt(window.location.hash.replace('#node=', ''), 10);
+        if (!isNaN(nodeFromHash) && nodeFromHash >= 0) {
+          overrideCurrentIndex = nodeFromHash;
+          localStorage.setItem("roadmapCurrentIndex", nodeFromHash.toString());
+        }
+      }
+      
       const savedRoadmap = localStorage.getItem("generatedRoadmap");
       const savedPrompt = localStorage.getItem("roadmapPrompt");
       const savedTimestamp = localStorage.getItem("roadmapGeneratedAt");
@@ -227,7 +256,9 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
         setGeneratedAt(savedTimestamp);
       }
       
-      if (savedCurrentIndex) {
+      if (overrideCurrentIndex !== null) {
+        setCurrentNodeIndex(overrideCurrentIndex);
+      } else if (savedCurrentIndex) {
         setCurrentNodeIndex(parseInt(savedCurrentIndex, 10));
       }
     } catch (error) {
@@ -238,12 +269,44 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
     }
   }, []);
 
+  // Listen for hash changes to handle demo mode and node navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (typeof window !== 'undefined') {
+        if (window.location.hash.includes('demo=true')) {
+          localStorage.setItem("generatedRoadmap", JSON.stringify(dummyRoadmap));
+          localStorage.setItem("roadmapPrompt", dummyPrompt);
+          localStorage.setItem("roadmapGeneratedAt", dummyGeneratedAt);
+          localStorage.setItem("roadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+          
+          setRoadmapData(dummyRoadmap);
+          setUserPrompt(dummyPrompt);
+          setGeneratedAt(dummyGeneratedAt);
+          setCurrentNodeIndex(dummyCurrentNodeIndex);
+        }
+        
+        if (window.location.hash.startsWith('#node=')) {
+          const nodeFromHash = parseInt(window.location.hash.replace('#node=', ''), 10);
+          if (!isNaN(nodeFromHash) && nodeFromHash >= 0) {
+            setCurrentNodeIndex(nodeFromHash);
+            localStorage.setItem("roadmapCurrentIndex", nodeFromHash.toString());
+          }
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   if (loading) {
     return (
-      <div className={`${nunito.className} min-h-screen flex items-center justify-center`}>
+      <div className={`${nunito.className} min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center`}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your roadmap...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
+          <p className="text-slate-300">Loading your roadmap...</p>
         </div>
       </div>
     );
@@ -339,23 +402,23 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
   const progressPercentage = (completedCount / totalCount) * 100;
 
   return (
-    <div className={`${nunito.className} min-h-screen py-8 px-2 sm:px-4`}>
+    <div className={`${nunito.className} min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 py-8 px-2 sm:px-4`}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">
+          <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 text-white">
             Your Learning{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
               Roadmap
             </span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-6">
             Follow your personalized learning path and track your progress through each milestone.
           </p>
           <div className="flex gap-4 justify-center">
             <Button 
               onClick={() => window.location.href = '/generate'}
-              className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+              className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 text-white backdrop-blur-sm shadow-lg"
             >
               Generate New Roadmap
             </Button>
@@ -364,20 +427,20 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
 
         {/* User Prompt Display */}
         {userPrompt && (
-          <Card className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+          <Card className="mb-8 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm border-purple-400/30 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-start justify-between mb-3">
-                <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
                   <BookOpen className="w-5 h-5" />
                   Your Learning Goal
                 </h3>
                 {generatedAt && (
-                  <span className="text-sm text-purple-600">
+                  <span className="text-sm text-purple-300">
                     Generated {new Date(generatedAt).toLocaleDateString()}
                   </span>
                 )}
               </div>
-              <p className="text-purple-700 leading-relaxed italic">
+              <p className="text-white leading-relaxed italic">
                 &quot;{userPrompt}&quot;
               </p>
             </CardContent>
@@ -386,18 +449,18 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
 
         {/* Empty State - No Roadmap */}
         {roadmapData.length === 0 && (
-          <Card className="mb-12 bg-gradient-to-r from-gray-50 to-blue-50 border-gray-200">
+          <Card className="mb-12 bg-slate-800/50 backdrop-blur-sm border-slate-600/40 shadow-lg">
             <CardContent className="p-12 text-center">
               <div className="text-6xl mb-4">🗺️</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              <h2 className="text-2xl font-bold text-white mb-4">
                 No Roadmap Yet
               </h2>
-              <p className="text-lg text-gray-600 mb-6 max-w-md mx-auto">
+              <p className="text-lg text-slate-300 mb-6 max-w-md mx-auto">
                 Create your personalized learning roadmap to get started on your learning journey!
               </p>
               <Button 
                 onClick={() => window.location.href = '/generate'}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white text-lg px-8 py-3"
+                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white text-lg px-8 py-3 backdrop-blur-sm shadow-lg"
               >
                 <Sparkles className="w-5 h-5 mr-2" />
                 Create Your First Roadmap
@@ -408,24 +471,24 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
 
         {/* Progress Overview */}
         {roadmapData.length > 0 && (
-          <Card className="mb-12 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+          <Card className="mb-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border-blue-400/30 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-gray-800">Overall Progress</h2>
-                <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+                <h2 className="text-2xl font-bold text-white">Overall Progress</h2>
+                <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
                   {Math.round(progressPercentage)}%
                 </span>
               </div>
               
               {/* Progress Bar */}
-              <div className="w-full bg-gray-200 rounded-full h-4 mb-4 overflow-hidden">
+              <div className="w-full bg-slate-700/50 rounded-full h-4 mb-4 overflow-hidden backdrop-blur-sm">
                 <div 
-                  className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-out shadow-lg"
+                  className="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full transition-all duration-1000 ease-out shadow-lg"
                   style={{ width: `${progressPercentage}%` }}
                 ></div>
               </div>
               
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-slate-300">
                 <span>{completedCount} of {totalCount} completed</span>
                 <span>{totalCount - currentNodeIndex} remaining</span>
               </div>
@@ -524,16 +587,16 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
 
         {/* Completion Celebration */}
         {currentNodeIndex >= roadmapData.length && roadmapData.length > 0 && (
-          <Card className="mt-12 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <Card className="mt-12 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-sm border-emerald-400/30 shadow-lg">
             <CardContent className="p-8 text-center">
               <div className="text-6xl mb-4">🎉</div>
-              <h2 className="text-3xl font-bold text-green-800 mb-2">
+              <h2 className="text-3xl font-bold text-emerald-300 mb-2">
                 Congratulations!
               </h2>
-              <p className="text-lg text-green-700 mb-6">
+              <p className="text-lg text-white mb-6">
                 You have completed your entire learning roadmap!
               </p>
-              <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white">
+              <Button className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 text-white backdrop-blur-sm shadow-lg">
                 Get Your Certificate
               </Button>
             </CardContent>

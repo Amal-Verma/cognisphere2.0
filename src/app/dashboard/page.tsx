@@ -14,69 +14,27 @@ function Dashboard({ onLogout }: DashboardProps) {
   const [courses, setCourses] = useState([
     {
       id: 1,
-      title: 'Advanced Machine Learning',
-      description: 'Deep dive into neural networks, transformers, and modern AI architectures',
-      progress: 75,
-      modules: 12,
-      completedModules: 9,
-      timeSpent: '24h 30m',
-      difficulty: 'Advanced',
-      category: 'AI & ML',
-      thumbnail: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400',
-      lastAccessed: '2 hours ago',
-      status: 'In Progress'
-    },
-    {
-      id: 2,
-      title: 'Quantum Physics Fundamentals',
-      description: 'Understanding quantum mechanics from first principles',
-      progress: 45,
+      title: 'Web Development Fundamentals',
+      description: 'Learn HTML, CSS, JavaScript, and React to build modern web applications from scratch',
+      progress: 0,
       modules: 8,
-      completedModules: 4,
-      timeSpent: '16h 15m',
-      difficulty: 'Intermediate',
-      category: 'Physics',
-      thumbnail: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=400',
-      lastAccessed: '1 day ago',
-      status: 'In Progress'
-    },
-    {
-      id: 3,
-      title: 'Renaissance Art History',
-      description: 'Exploring the masters and movements of the Renaissance period',
-      progress: 100,
-      modules: 6,
-      completedModules: 6,
-      timeSpent: '12h 45m',
+      completedModules: 0,
+      timeSpent: '0h 0m',
       difficulty: 'Beginner',
-      category: 'History',
-      thumbnail: 'https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=400',
-      lastAccessed: '3 days ago',
-      status: 'Completed'
-    },
-    {
-      id: 4,
-      title: 'Modern JavaScript Development',
-      description: 'ES6+, React, Node.js, and modern web development practices',
-      progress: 30,
-      modules: 15,
-      completedModules: 5,
-      timeSpent: '8h 20m',
-      difficulty: 'Intermediate',
-      category: 'Programming',
+      category: 'Web Development',
       thumbnail: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=400',
-      lastAccessed: '5 hours ago',
-      status: 'In Progress'
+      lastAccessed: 'Never',
+      status: 'Not Started'
     }
   ]);
 
   const [stats, setStats] = useState({
-    totalCourses: 4,
-    completedCourses: 1,
-    totalHours: 61.5,
-    currentStreak: 12,
-    averageScore: 87,
-    certificates: 3
+    totalCourses: 1,
+    completedCourses: 0,
+    totalHours: 0,
+    currentStreak: 0,
+    averageScore: 0,
+    certificates: 0
   });
 
   const dashboardNavigation = [
@@ -270,7 +228,7 @@ function Dashboard({ onLogout }: DashboardProps) {
               {/* Recent Courses */}
               <div className="bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 mb-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white">Continue Learning</h2>
+                  <h2 className="text-2xl font-bold text-white">Demo Courses</h2>
                   <button 
                     onClick={() => setCurrentPage('courses')}
                     className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
@@ -279,8 +237,12 @@ function Dashboard({ onLogout }: DashboardProps) {
                   </button>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {courses.filter(course => course.status === 'In Progress').slice(0, 2).map((course) => (
-                    <div key={course.id} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 group cursor-pointer">
+                  {courses.slice(0, 1).map((course) => (
+                    <div 
+                      key={course.id} 
+                      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 group cursor-pointer"
+                      onClick={() => window.location.href = '/roadmap#demo=true'}
+                    >
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-300 transition-colors">{course.title}</h3>
@@ -290,7 +252,13 @@ function Dashboard({ onLogout }: DashboardProps) {
                             <span>{course.timeSpent}</span>
                           </div>
                         </div>
-                        <button className="p-2 bg-blue-500/20 backdrop-blur-xl rounded-xl text-blue-400 hover:bg-blue-500/30 transition-colors">
+                        <button 
+                          className="p-2 bg-blue-500/20 backdrop-blur-xl rounded-xl text-blue-400 hover:bg-blue-500/30 transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = '/roadmap#demo=true';
+                          }}
+                        >
                           <Play className="w-5 h-5" />
                         </button>
                       </div>
@@ -314,7 +282,7 @@ function Dashboard({ onLogout }: DashboardProps) {
               {/* Quick Actions */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <button 
-                  onClick={() => setIsCreateCourseOpen(true)}
+                  onClick={() => window.location.href = '/generate'}
                   className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 hover:from-blue-500/30 hover:to-purple-500/30 transition-all duration-300 group"
                 >
                   <Plus className="w-12 h-12 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
@@ -423,7 +391,10 @@ function Dashboard({ onLogout }: DashboardProps) {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <button className="flex items-center text-blue-400 hover:text-blue-300 transition-colors font-medium">
+                        <button 
+                          className="flex items-center text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                          onClick={() => window.location.href = '/roadmap#demo=true'}
+                        >
                           <Play className="w-4 h-4 mr-2" />
                           Continue
                         </button>
