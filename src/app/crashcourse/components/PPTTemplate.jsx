@@ -868,14 +868,14 @@ export default function PPTTemplate({ slides, currentSlide, onNext, onPrev, onGo
             className="px-6 py-3 bg-gradient-to-r from-green-400/80 to-emerald-500/80 hover:from-green-400 hover:to-emerald-500 text-white rounded-xl font-bold text-lg shadow-lg transition-all duration-200"
             onClick={() => {
               // Update roadmap progress
-              const savedCurrentIndex = localStorage.getItem('roadmapCurrentIndex');
+              const savedCurrentIndex = localStorage.getItem('dummyRoadmapCurrentIndex');
               let newIndex = 1;
               if (savedCurrentIndex) {
                 newIndex = parseInt(savedCurrentIndex, 10) + 1;
               }
-              localStorage.setItem('roadmapCurrentIndex', newIndex.toString());
+              localStorage.setItem('dummyRoadmapCurrentIndex', newIndex.toString());
               // Optionally redirect to roadmap
-              window.location.href = '/roadmap';
+              window.location.href = '/roadmap#demo=true';
             }}
           >
             🎉 Complete Course & Update Progress

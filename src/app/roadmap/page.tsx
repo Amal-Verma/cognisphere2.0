@@ -180,7 +180,7 @@ const RoadmapNode = ({
                     localStorage.setItem('courseTitle', node.title);
                     localStorage.setItem('courseDescription', node.description);
                     // Redirect to crash course page
-                    window.location.href = '/crashcourse';
+                    window.location.href = '/crashcourse?demo=true';
                   }}
                   className="mt-3 w-full shadow-lg text-xs bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
                   size="sm"
@@ -222,10 +222,19 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
       
       if (isDemoMode) {
         // Store dummy data in localStorage with specific dummy variable names
-        localStorage.setItem("dummyGeneratedRoadmap", JSON.stringify(dummyRoadmap));
-        localStorage.setItem("dummyRoadmapPrompt", dummyPrompt);
-        localStorage.setItem("dummyRoadmapGeneratedAt", dummyGeneratedAt);
-        localStorage.setItem("dummyRoadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+        // Only set default values if they don't already exist
+        if (!localStorage.getItem("dummyGeneratedRoadmap")) {
+          localStorage.setItem("dummyGeneratedRoadmap", JSON.stringify(dummyRoadmap));
+        }
+        if (!localStorage.getItem("dummyRoadmapPrompt")) {
+          localStorage.setItem("dummyRoadmapPrompt", dummyPrompt);
+        }
+        if (!localStorage.getItem("dummyRoadmapGeneratedAt")) {
+          localStorage.setItem("dummyRoadmapGeneratedAt", dummyGeneratedAt);
+        }
+        if (!localStorage.getItem("dummyRoadmapCurrentIndex")) {
+          localStorage.setItem("dummyRoadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+        }
       }
       
       // Check for URL hash to override current node index
@@ -314,15 +323,29 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
       if (typeof window !== 'undefined') {
         if (window.location.hash.includes('demo=true')) {
           // Store dummy data in localStorage with specific dummy variable names
-          localStorage.setItem("dummyGeneratedRoadmap", JSON.stringify(dummyRoadmap));
-          localStorage.setItem("dummyRoadmapPrompt", dummyPrompt);
-          localStorage.setItem("dummyRoadmapGeneratedAt", dummyGeneratedAt);
-          localStorage.setItem("dummyRoadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+          // Only set default values if they don't already exist
+          if (!localStorage.getItem("dummyGeneratedRoadmap")) {
+            localStorage.setItem("dummyGeneratedRoadmap", JSON.stringify(dummyRoadmap));
+          }
+          if (!localStorage.getItem("dummyRoadmapPrompt")) {
+            localStorage.setItem("dummyRoadmapPrompt", dummyPrompt);
+          }
+          if (!localStorage.getItem("dummyRoadmapGeneratedAt")) {
+            localStorage.setItem("dummyRoadmapGeneratedAt", dummyGeneratedAt);
+          }
+          
+          // Load the current index from localStorage or use default
+          const existingDummyIndex = localStorage.getItem("dummyRoadmapCurrentIndex");
+          const currentDummyIndex = existingDummyIndex ? parseInt(existingDummyIndex, 10) : dummyCurrentNodeIndex;
+          
+          if (!existingDummyIndex) {
+            localStorage.setItem("dummyRoadmapCurrentIndex", dummyCurrentNodeIndex.toString());
+          }
           
           setRoadmapData(dummyRoadmap);
           setUserPrompt(dummyPrompt);
           setGeneratedAt(dummyGeneratedAt);
-          setCurrentNodeIndex(dummyCurrentNodeIndex);
+          setCurrentNodeIndex(currentDummyIndex);
         }
         
         if (window.location.hash.startsWith('#node=')) {
