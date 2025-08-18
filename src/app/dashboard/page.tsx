@@ -290,10 +290,13 @@ function Dashboard({ onLogout }: DashboardProps) {
                   <p className="text-white/70">Generate AI-powered learning content</p>
                 </button>
                 
-                <button className="bg-white/10 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 hover:bg-white/15 transition-all duration-300 group">
-                  <MessageCircle className="w-12 h-12 text-green-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-xl font-semibold text-white mb-2">AI Tutor Chat</h3>
-                  <p className="text-white/70">Get instant help and guidance</p>
+                <button 
+                  onClick={() => window.location.href = '/flashcards'}
+                  className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 hover:from-purple-500/30 hover:to-blue-500/30 transition-all duration-300 group"
+                >
+                  <Brain className="w-12 h-12 text-purple-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-xl font-semibold text-white mb-2">Flashcards</h3>
+                  <p className="text-white/70">Practice with interactive flashcards</p>
                 </button>
                 
                 <button 
