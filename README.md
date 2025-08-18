@@ -198,8 +198,8 @@ This model drives mass adoption while ensuring sustainable revenue.
 
 ## 🎥 Demo
 
-- 📺 [Demo Video](demo_recording.mp4)
-- 🌐 [Live Prototype](#)
+- 📺 [Demo Video](demo_video.mp4)
+- 🌐 [Live Prototype](https://launchpad-mappa-git-main-amal-vermas-projects.vercel.app/)
 
 ## 🔑 Why CogniSphere is Product-Ready
 
@@ -227,7 +227,7 @@ CogniSphere was built leveraging cutting-edge AI assistants that accelerated ide
 
 - ✍️ **GitHub Copilot** – Code autocompletion and boilerplate generation.  
 - 💬 **ChatGPT** – Brainstorming, debugging, and refining documentation.  
-- 🔮 **Gemini Pro (College Students)** – Core engine for roadmap generation, tutoring, and adaptive learning content.  
+- 🔮 **Gemini Pro (College Students)** – For roadmap generation, tutoring, and adaptive learning content.  
 - ⚡ **Bolt.new** – Rapid prototyping of frontend components.  
 - 🧾 **Claude** – Structuring reports, ensuring clarity, and polishing user-facing copy.  
 
