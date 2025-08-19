@@ -547,6 +547,14 @@ export default function RoadmapPage({ n = 3 }: { n?: number }) {
           </p>
           <div className="flex gap-4 justify-center">
             <Button 
+              onClick={() => window.location.href = '/'}
+              variant="outline"
+              className="border-slate-600/40 text-slate-300 hover:bg-slate-700/50 backdrop-blur-sm bg-slate-700/50"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+            <Button 
               onClick={() => window.location.href = '/generate'}
               className="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 text-white backdrop-blur-sm shadow-lg"
             >

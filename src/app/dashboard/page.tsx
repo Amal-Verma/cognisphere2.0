@@ -39,7 +39,8 @@ function Dashboard({ onLogout }: DashboardProps) {
 
   const dashboardNavigation = [
     { name: 'Dashboard', id: 'dashboard', icon: <Home className="w-5 h-5" /> },
-    { name: 'My Courses', id: 'courses', icon: <Library className="w-5 h-5" /> },
+    { name: 'My Courses', id: 'courses', icon: <BookOpen className="w-5 h-5" /> },
+    { name: 'Digital Library', id: 'library', icon: <Library className="w-5 h-5" />, href: '/library' },
     { name: 'Create Course', id: 'create', icon: <PlusCircle className="w-5 h-5" /> },
     { name: 'Analytics', id: 'analytics', icon: <BarChart className="w-5 h-5" /> },
     { name: 'Help', id: 'help', icon: <HelpCircle className="w-5 h-5" /> }
@@ -152,7 +153,13 @@ function Dashboard({ onLogout }: DashboardProps) {
               {dashboardNavigation.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => setCurrentPage(item.id)}
+                  onClick={() => {
+                    if (item.href) {
+                      window.location.href = item.href;
+                    } else {
+                      setCurrentPage(item.id);
+                    }
+                  }}
                   className={`w-full flex items-center px-4 py-3 rounded-2xl transition-all duration-300 ${
                     currentPage === item.id 
                       ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-white/20 text-white' 
@@ -280,7 +287,7 @@ function Dashboard({ onLogout }: DashboardProps) {
               </div>
 
               {/* Quick Actions */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <button 
                   onClick={() => window.location.href = '/generate'}
                   className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 hover:from-blue-500/30 hover:to-purple-500/30 transition-all duration-300 group"
@@ -288,6 +295,15 @@ function Dashboard({ onLogout }: DashboardProps) {
                   <Plus className="w-12 h-12 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
                   <h3 className="text-xl font-semibold text-white mb-2">Create New Course</h3>
                   <p className="text-white/70">Generate AI-powered learning content</p>
+                </button>
+
+                <button 
+                  onClick={() => window.location.href = '/library'}
+                  className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 backdrop-blur-3xl border border-white/20 rounded-3xl p-8 hover:from-emerald-500/30 hover:to-teal-500/30 transition-all duration-300 group"
+                >
+                  <Library className="w-12 h-12 text-emerald-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-xl font-semibold text-white mb-2">Digital Library</h3>
+                  <p className="text-white/70">Browse and upload textbooks</p>
                 </button>
                 
                 <button 
