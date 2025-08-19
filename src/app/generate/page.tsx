@@ -62,7 +62,7 @@ export default function GeneratePage() {
       localStorage.setItem("roadmapCurrentIndex", "0");
       
       // Navigate to roadmap page
-      router.push("/roadmap");
+      router.push("/roadmap#demo=true");
     } catch (err) {
       console.error("Error generating roadmap:", err);
       setError("Failed to generate roadmap. Please try again.");

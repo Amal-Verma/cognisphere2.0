@@ -24,13 +24,20 @@ import {
 // Simple QuestionRenderer component
 const QuestionRenderer = ({ children }: { children: string }) => {
   return (
-    <div className="prose prose-sm max-w-none prose-invert">
-      <div dangerouslySetInnerHTML={{ 
-        __html: children
-          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-300">$1</strong>')
-          .replace(/`(.*?)`/g, '<code class="bg-slate-700/50 text-blue-300 px-1 rounded">$1</code>')
-          .replace(/\n/g, '<br/>') 
-      }} />
+    <div className="prose prose-sm max-w-none prose-invert text-slate-200">
+      <div 
+        className="text-slate-200 leading-relaxed"
+        dangerouslySetInnerHTML={{ 
+          __html: children
+            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-300 font-semibold">$1</strong>')
+            .replace(/`(.*?)`/g, '<code class="bg-slate-700/50 text-blue-300 px-1 py-0.5 rounded text-sm">$1</code>')
+            .replace(/### (.*?)(\n|$)/g, '<h3 class="text-xl font-bold text-white mb-2 mt-4">$1</h3>')
+            .replace(/## (.*?)(\n|$)/g, '<h2 class="text-2xl font-bold text-white mb-3 mt-4">$1</h2>')
+            .replace(/# (.*?)(\n|$)/g, '<h1 class="text-3xl font-bold text-white mb-4 mt-4">$1</h1>')
+            .replace(/> (.*?)(\n|$)/g, '<blockquote class="border-l-4 border-blue-400 pl-4 italic text-slate-300 my-2">$1</blockquote>')
+            .replace(/\n/g, '<br/>') 
+        }} 
+      />
     </div>
   );
 };
@@ -360,7 +367,7 @@ export default function AssessmentPage() {
             </p>
             <div className="space-y-2">
               <Button 
-                onClick={() => window.location.href = '/roadmap'}
+                onClick={() => window.location.href = '/roadmap#demo=true'}
                 className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white backdrop-blur-sm"
               >
                 <BookOpen className="w-4 h-4 mr-2" />
@@ -453,7 +460,9 @@ export default function AssessmentPage() {
                             <div className="font-medium mb-2 text-white">
                               Question {index + 1}
                             </div>
-                            <QuestionRenderer>{question.question}</QuestionRenderer>
+                            <div className="text-slate-200">
+                              <QuestionRenderer>{question.question}</QuestionRenderer>
+                            </div>
                             <div className="mt-3 space-y-2">
                               {question.options.map((option, optionIndex) => {
                                 const isSelected = userAnswer.includes(optionIndex)
@@ -468,7 +477,7 @@ export default function AssessmentPage() {
                                     <div className="flex items-center gap-2">
                                       {isCorrectOption && <CheckCircle className="w-4 h-4 text-emerald-400" />}
                                       {isSelected && !isCorrectOption && <XCircle className="w-4 h-4 text-red-400" />}
-                                      <span className={`${isCorrectOption ? 'font-medium text-white' : 'text-slate-300'}`}>
+                                      <span className={`${isCorrectOption ? 'font-medium text-white' : 'text-slate-200'}`}>
                                         {option}
                                       </span>
                                     </div>
@@ -486,7 +495,7 @@ export default function AssessmentPage() {
 
               <div className="text-center mt-8">
                 <Button 
-                  onClick={() => window.location.href = '/roadmap'}
+                  onClick={() => window.location.href = '/roadmap#demo=true'}
                   className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white backdrop-blur-sm"
                 >
                   Back to Roadmap
@@ -599,7 +608,7 @@ export default function AssessmentPage() {
                 onClick={handleSubmitTest}
                 variant="outline"
                 size="sm"
-                className="text-blue-400 border-blue-400/40 hover:bg-blue-500/20 backdrop-blur-sm"
+                className="text-blue-300 border-blue-400/40 hover:bg-blue-500/20 backdrop-blur-sm bg-slate-700/30"
               >
                 Submit Test
               </Button>
@@ -631,7 +640,7 @@ export default function AssessmentPage() {
                       ? 'bg-blue-500 hover:bg-blue-600 text-white'
                       : userAnswers[index] && userAnswers[index].length > 0
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40 hover:bg-emerald-500/30'
-                      : 'border-slate-600/40 text-slate-400 hover:bg-slate-700/50'
+                      : 'border-slate-600/40 text-slate-300 hover:bg-slate-700/50 bg-slate-700/30'
                   } backdrop-blur-sm`}
                 >
                   {index + 1}
@@ -654,7 +663,9 @@ export default function AssessmentPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <QuestionRenderer>{currentQuestion.question}</QuestionRenderer>
+              <div className="text-slate-200">
+                <QuestionRenderer>{currentQuestion.question}</QuestionRenderer>
+              </div>
               
               <div className="space-y-3">
                 {currentQuestion.options.map((option, index) => (
@@ -663,25 +674,25 @@ export default function AssessmentPage() {
                       variant={userAnswers[currentQuestionIndex]?.includes(index) ? "default" : "outline"}
                       className={`w-full p-4 h-auto text-left justify-start backdrop-blur-sm ${
                         userAnswers[currentQuestionIndex]?.includes(index)
-                          ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                          : 'border-slate-600/40 bg-slate-100 hover:bg-slate-200 text-slate-700'
+                          ? 'bg-blue-500 hover:bg-blue-600 text-white border-blue-400'
+                          : 'border-slate-600/40 bg-slate-700/50 hover:bg-slate-600/50 text-slate-200'
                       }`}
                       onClick={() => handleOptionSelect(index)}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-4 h-4 rounded-full border-2 ${
+                        <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                           userAnswers[currentQuestionIndex]?.includes(index)
                             ? 'bg-white border-white'
-                            : 'bg-slate-200 border-slate-300'
+                            : 'bg-slate-600/50 border-slate-500'
                         }`}>
                           {userAnswers[currentQuestionIndex]?.includes(index) && (
-                            <CheckCircle className="w-4 h-4 text-blue-500" />
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                           )}
                         </div>
                         <span className={`flex-1 ${
                           userAnswers[currentQuestionIndex]?.includes(index)
                             ? 'text-white'
-                            : 'text-black'
+                            : 'text-slate-200'
                         }`}>{option}</span>
                       </div>
                     </Button>

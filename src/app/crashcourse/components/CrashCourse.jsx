@@ -167,7 +167,7 @@ Remember to practice what you've learned and continue exploring this fascinating
     setProcessingProgress(0);
     setIsChatbotOpen(false);
     // Go back to roadmap
-    window.location.href = '/roadmap';
+    window.location.href = '/roadmap#demo=true';
   };
 
   const nextSlide = () => {
